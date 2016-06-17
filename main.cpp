@@ -20,7 +20,7 @@ void draw(void){
     camera1->update();
 
     for(int i = 0; i < (int)go_list.size(); i++)
-      go_list[i]->draw();
+      go_list[i]->update();
 
     glutSwapBuffers();
 }
@@ -28,6 +28,7 @@ void draw(void){
 void update(int value){
     glutPostRedisplay();
     glutTimerFunc(1000/max_fps,update, 1);
+    go_list[0]->pos->z += 0.05;
 }
 
 void initWorld(void){
@@ -36,8 +37,11 @@ void initWorld(void){
   glShadeModel(GL_FLAT);
 
 
-  go_list.push_back(new GameObject(new Vector3(-3, 0, 0)));
-  go_list.push_back(new GameObject(new Vector3(1, 0, 0)));
+  go_list.push_back(new GameObject(new Vector3(0, 0, 0)));
+  GameObject* go = new GameObject(new Vector3(2, 0, 0));
+  go->rot->x = 90;
+  go_list[0]->add_child(go);
+
   camera1 = new Camera(new Vector3(0.0,0.0,5.0), new Vector3(0.0, 0.0, 0.0));
 }
 
