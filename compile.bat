@@ -1,0 +1,1 @@
+gcc %1 -o %2 -l opengl32 -l glu32 -l freeglut
