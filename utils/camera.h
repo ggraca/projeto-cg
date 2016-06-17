@@ -24,9 +24,13 @@ using namespace std;
 class Camera{
   public:
     Vector3* pos;
-    Vector3* dir;
-    Camera(Vector3* a, Vector3* b);
+	Vector3* dir;
+	Vector3* up;
+	
+	Camera(Vector3* pos, Vector3* dir,Vector3* up);
     void update();
+
+	
 };
 #endif /* CAMERA_H */
 

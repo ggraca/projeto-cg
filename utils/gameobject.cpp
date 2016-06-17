@@ -1,4 +1,5 @@
 #include "gameobject.h"
+
 GameObject::GameObject(Vector3* a){
   this->pos = a;
   this->rot = new Vector3(0, 0, 0);

@@ -5,13 +5,13 @@ GLint wSizeW, wSizeH,wPosX,wPosY;
 GLfloat bule=0.5;
 GLfloat bulePos[]= {3, 0, 3};
 GLfloat quadPos[]= {4,0,4};
-GLfloat obsUpVector[]={0,1,0};
 
 
-GLfloat obsPos[] = {0, 2, 0};
-GLfloat obsLookAt[] = {3,0,3};
-
+Vector3 *obsUpVector = new Vector3(0,1,0);
+Vector3 *obsLookAt = new Vector3(3,0,3);
+Vector3 *obsPos = new Vector3(0,0,0);
 GLfloat mouseX, mouseY;
+Camera *cam = new Camera(obsPos,obsLookAt,obsUpVector);
 
 int initValues(){
 	wPosX=0;
@@ -20,6 +20,7 @@ int initValues(){
 	wSizeH=1080;
 	mouseX = wPosX/2;
 	mouseY= wPosY/2;
+	
 }
 
 GLfloat mouseSpeed = 1;
@@ -83,8 +84,8 @@ void drawScene(){
 	
 	//Camera
 	glPushMatrix();
-		glTranslatef(obsPos[0], obsPos[1], obsPos[2]);
-		glRotatef(horizontalAngle,0,1,0);
+		glTranslatef(obsPos->x,obsPos->y,obsPos->z);
+		glRotatef(horizontalAngle,obsUpVector->x,obsUpVector->y,obsUpVector->z);
 		glColor4f(1,1,1,1); //NOTA: Definir previamente o VERMELHO
 		glBegin(GL_QUADS);
 			glVertex3f( -1, 0, -1);
@@ -98,11 +99,12 @@ void drawScene(){
 
 
 
-/*void updateCameraDirection()(
-    obsLookAt[0] = (cos(verticalAngle) * sin(horizontalAngle));
-    obsLookAt[1] = sin(verticalAngle);
-    obsLookAt[2] = (cos(verticalAngle) * cos(horizontalAngle));
-)*/
+void updateCameraDirection(){
+	
+    obsLookAt->x = (GLfloat)(cos(verticalAngle) * sin(horizontalAngle));
+    obsLookAt->y = (GLfloat)sin(verticalAngle);
+    obsLookAt->z = (GLfloat)(cos(verticalAngle) * cos(horizontalAngle));
+}
 
 void display(){
 	
@@ -117,7 +119,7 @@ void display(){
 		//Observer
 		glMatrixMode( GL_MODELVIEW );
 		glLoadIdentity();
-		gluLookAt( obsPos[0],obsPos[1],obsPos[2], obsLookAt[0], obsLookAt[1], obsLookAt[2], obsUpVector[0],obsUpVector[1],obsUpVector[2] ); //observador: onde está, para onde olha e qual a direcção do up vector.
+		cam->update();
 		drawScene();
 		
 	glPopMatrix();
@@ -178,7 +180,7 @@ void updateMousePos(int x, int y){
 	mouseY = y;
 }
 
-void fpsCameraUpdateValues(){
+void cameraAngleUpdate(){
 
 	// Compute new orientation
 	horizontalAngle += mouseSpeed * deltaTime * float(1024/2 - mouseX );
