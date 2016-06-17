@@ -1,4 +1,4 @@
-#include "main.h"
+#include "input.h"
 
 void keyboard(unsigned char key, int x, int y){
     switch (key){

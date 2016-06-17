@@ -1,9 +1,9 @@
+#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include <GL/glut.h>
 #include <vector>
-#include <math.h>
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
@@ -14,12 +14,10 @@
 #include <GL/gl.h>
 #endif
 
-#include "utils\gameobject.h"
-#include "utils\camera.h"
-#include "utils\input.h"
-
-#define LARANJA 0.5,1,0,1
-#define VERMELHO 1,0,0,1
-#define PI		 3.14159
+#include "camera.h"
 
 using namespace std;
+
+extern Camera *camera1;
+
+void keyboard(unsigned char key, int x, int y);

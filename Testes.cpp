@@ -1,19 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include ""
-#ifdef __APPLE__
-#include <OpenGL/OpenGL.h>
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#include<GL/glu.h>
-#include <GL/gl.h>
-#endif
+#include "Testes.h"
 
-#define LARANJA 0.5,1,0,1
-#define VERMELHO 1,0,0,1
-#define PI		 3.14159
 
 GLint wSizeW, wSizeH,wPosX,wPosY;
 GLfloat bule=0.5;
@@ -22,7 +8,7 @@ GLfloat quadPos[]= {4,0,4};
 GLfloat obsUpVector[]={0,1,0};
 
 
-GLfloat  obsPos[] = {0, 2, 0};
+GLfloat obsPos[] = {0, 2, 0};
 GLfloat obsLookAt[] = {3,0,3};
 
 GLfloat mouseX, mouseY;
@@ -51,6 +37,25 @@ void drawPerspective(){
 	gluPerspective(65.0, (GLdouble) wSizeW/wSizeH,1,100.0);
 }
 
+int drawAxis(){
+	glPushMatrix();
+		glColor4f(1,0,0,1);
+		glBegin(GL_LINES);
+			glVertex3i( -100, 0, 0); 
+			glVertex3i(100, 0, 0); 
+		glEnd();
+		glColor4f(0,1,0,1);
+		glBegin(GL_LINES);
+			glVertex3i(0,  -100, 0); 
+			glVertex3i(0, 100, 0); 
+		glEnd();
+		glColor4f(0,0,1,1);
+		glBegin(GL_LINES);
+			glVertex3i( 0, 0, -100); 
+			glVertex3i( 0, 0,100); 
+		glEnd();
+	glPopMatrix();
+}
 
 void drawScene(){
 	
@@ -90,30 +95,19 @@ void drawScene(){
 	glPopMatrix();
 	
 }
-int drawAxis(){
-	glPushMatrix();
-		glColor4f(1,0,0,1);
-		glBegin(GL_LINES);
-			glVertex3i( -100, 0, 0); 
-			glVertex3i(100, 0, 0); 
-		glEnd();
-		glColor4f(0,1,0,1);
-		glBegin(GL_LINES);
-			glVertex3i(0,  -100, 0); 
-			glVertex3i(0, 100, 0); 
-		glEnd();
-		glColor4f(0,0,1,1);
-		glBegin(GL_LINES);
-			glVertex3i( 0, 0, -100); 
-			glVertex3i( 0, 0,100); 
-		glEnd();
-	glPopMatrix();
-}
+
+
+
+void updateCameraDirection()(
+    obsLookAt[0] = (cos(verticalAngle) * sin(horizontalAngle));
+    obsLookAt[1] = sin(verticalAngle);
+    obsLookAt[2] = (cos(verticalAngle) * cos(horizontalAngle));
+)
 
 void display(){
 	
 	glClear(GL_COLOR_BUFFER_BIT);
-	updateCameraDirection()
+	updateCameraDirection();
 	
 	glPushMatrix();
 		glViewport (wSizeW/3,0,wSizeW, wSizeH);
@@ -156,7 +150,7 @@ void display(){
 
 	glutPostRedisplay();	
 }*/
-void crossproduct(vector v1,vector v2,vector cross_p)
+/*void crossproduct(vector v1,vector v2,vector cross_p)
 
 {
 
@@ -168,7 +162,7 @@ void crossproduct(vector v1,vector v2,vector cross_p)
 
  cout<<"crossproduct = "<<cross_p.i<<"i"<<cross_p.j<<"j"<<cross_p.k<<"k"<<endl;
 
-}
+}*/
 
 void updateUpVector(){
 	//Right vector * Direction vector = up vector
@@ -176,18 +170,12 @@ void updateUpVector(){
 	float right[]= {
     sin(horizontalAngle - 3.14f/2.0f),
     0,
-    cos(horizontalAngle - 3.14f/2.0f)}
-	
-);
+    cos(horizontalAngle - 3.14f/2.0f)};
 }
-void updateCameraDirection()(
-    obsLookAt[0] = cos(verticalAngle) * sin(horizontalAngle);
-    obsLookAt[1] =sin(verticalAngle);
-    obsLookAt[2] =cos(verticalAngle) * cos(horizontalAngle);
-);
+
 void updateMousePos(int x, int y){
 	mouseX = x;
-	mouseY = y
+	mouseY = y;
 }
 
 void fpsCameraUpdateValues(){

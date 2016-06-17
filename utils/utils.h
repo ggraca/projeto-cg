@@ -1,9 +1,9 @@
+#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include <GL/glut.h>
 #include <vector>
-#include <math.h>
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
@@ -14,12 +14,14 @@
 #include <GL/gl.h>
 #endif
 
-#include "utils\gameobject.h"
-#include "utils\camera.h"
-#include "utils\input.h"
-
-#define LARANJA 0.5,1,0,1
-#define VERMELHO 1,0,0,1
-#define PI		 3.14159
-
 using namespace std;
+
+#ifndef VECTOR3_H
+#define VECTOR3_H
+	class Vector3{
+	  public:
+		GLfloat x, y, z;
+		Vector3(GLfloat x, GLfloat y, GLfloat z);
+		void print();
+	};
+#endif /* VECTOR3_H */

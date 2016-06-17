@@ -1,9 +1,12 @@
-#include "main.h"
+#include "camera.h"
+
 
 Camera::Camera(Vector3* a, Vector3* b){
   this->pos = a;
   this->dir = b;
 }
+
+
 
 void Camera::update(){
   glMatrixMode(GL_MODELVIEW);

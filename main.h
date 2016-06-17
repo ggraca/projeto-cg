@@ -1,15 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include <GL/glut.h>
+
 
 #include <vector>
 using namespace std;
 
-#include "utils.h"
-#include "gameobject.h"
-#include "camera.h"
-#include "input.h"
+#include "utils\utils.h"
+#include "utils\gameobject.h"
+#include "utils\camera.h"
+#include "utils\input.h"
 
 
-extern Camera *camera1;
