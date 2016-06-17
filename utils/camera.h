@@ -28,6 +28,6 @@ class Camera{
     Camera(Vector3* a, Vector3* b);
     void update();
 };
-
-extern Camera *camera1;
 #endif /* CAMERA_H */
+
+extern Camera * camera1;

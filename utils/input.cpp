@@ -1,4 +1,7 @@
 #include "input.h"
+#include "camera.h"
+
+Camera * camera1;
 
 void keyboard(unsigned char key, int x, int y){
     switch (key){

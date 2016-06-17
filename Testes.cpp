@@ -98,16 +98,16 @@ void drawScene(){
 
 
 
-void updateCameraDirection()(
+/*void updateCameraDirection()(
     obsLookAt[0] = (cos(verticalAngle) * sin(horizontalAngle));
     obsLookAt[1] = sin(verticalAngle);
     obsLookAt[2] = (cos(verticalAngle) * cos(horizontalAngle));
-)
+)*/
 
 void display(){
 	
 	glClear(GL_COLOR_BUFFER_BIT);
-	updateCameraDirection();
+	//updateCameraDirection();
 	
 	glPushMatrix();
 		glViewport (wSizeW/3,0,wSizeW, wSizeH);
