@@ -1,4 +1,4 @@
-#include "main.h"
+#include "utils.h"
 
 Vector3::Vector3(GLfloat x, GLfloat y, GLfloat z){
   this->x = x;
