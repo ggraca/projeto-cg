@@ -7,11 +7,10 @@ GLfloat bulePos[]= {3, 0, 3};
 GLfloat quadPos[]= {4,0,4};
 GLfloat currentTime, lastTime,deltaTime;
 
-Vector3 *obsUpVector = new Vector3(0,1,0);
 Vector3 *obsLookAt = new Vector3(3,0,3);
 Vector3 *obsPos = new Vector3(0,0,0);
 GLfloat mouseX, mouseY,lastMouseX,lastMouseY;
-Camera *cam = new Camera(obsPos,obsLookAt,obsUpVector,0,0,0,0,1);
+Camera *cam = new Camera(obsPos,obsLookAt,0,0,0,0,1);
 
 GLfloat mouseSpeed = 1;
 GLfloat horizontalAngle =0;
@@ -24,7 +23,6 @@ int initValues(){
 	wSizeH=1080;
 	mouseX = wSizeW/2;
 	mouseY= wSizeH/2;
-	currentTime = glutGet(GLUT_ELAPSED_TIME);
 	
 	cam->updateWindowSize(wSizeW,wSizeH);
 	cam->updateMouseSensitivity(mouseSpeed);
@@ -96,6 +94,7 @@ void display(){
 		glMatrixMode( GL_MODELVIEW );
 		glLoadIdentity();
 		
+	
 		cam->drawCamera();
 		drawScene();
 		
@@ -114,13 +113,6 @@ void display(){
 		glLoadIdentity();
 		gluLookAt( 0,10,0, 0, 0, 0, 0.0, 0.0, -1.0 ); //observador: onde está, para onde olha e qual a direcção do up vector.
 		
-	
-		
-		char texto[30];
-		sprintf(texto, "Horizontal Angle = %.3f", horizontalAngle);
-		drawText(texto,14, 0, 14);
-		sprintf(texto, "Vertical Angle = %.3f", verticalAngle);
-		drawText(texto,12,0,12);
 		
 		drawScene();
 		
@@ -167,7 +159,6 @@ void updateDeltaTime(){
 void idle (void)
 {
    //Corre sempre que o glut acabe de fazer calculos
-    updateDeltaTime();
 	//cameraAngleUpdate();
 	cam->update(obsPos);
 	

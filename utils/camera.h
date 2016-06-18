@@ -29,12 +29,11 @@ using namespace std;
 
 class Camera{
 	public:
-		Camera(Vector3* pos, Vector3* dir,Vector3* up, GLfloat hangle,GLfloat vangle,GLfloat windowW,GLfloat windowH, GLfloat msense);
-		void update(Vector3* pos, Vector3* dir, GLfloat hangle,GLfloat vangle);
+		Camera(Vector3* pos, Vector3* dir, GLfloat hangle,GLfloat vangle,GLfloat windowW,GLfloat windowH, GLfloat msense);
+		void update(Vector3* pos);
 		void drawCamera();
 		void updateAngleFPSCamera(int x, int y);
 		void updateWindowSize(GLfloat wwidth, GLfloat wheight);
-		void update(Vector3* pos);
 		void updateMouseSensitivity(GLfloat msense);
 	private:
 		Vector3* pos;

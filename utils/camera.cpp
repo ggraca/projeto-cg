@@ -1,10 +1,10 @@
 #include "camera.h"
 
 
-Camera::Camera(Vector3* pos, Vector3* dir,Vector3* up, GLfloat hangle,GLfloat vangle,GLfloat windowW,GLfloat windowH, GLfloat msense){
+Camera::Camera(Vector3* pos, Vector3* dir, GLfloat hangle,GLfloat vangle,GLfloat windowW,GLfloat windowH, GLfloat msense){
   this->pos = pos;
   this->dir = dir;
-  this->up = up;
+  this->up = new Vector3(0,1,0);
   this->horizontalAngle=hangle;
   this->verticalAngle=vangle;
   this->width=windowW;
@@ -38,7 +38,7 @@ void Camera::updateUpVector(){
 									0,
 									cos(horizontalAngle*DEGREE_TO_RAD - 3.14f/2.0f));
 	
-	this->up = Vector3::crossproduct( this->dir,obsRightVector);
+	this->up = Vector3::crossproduct(obsRightVector,this->dir);
 }
 
 
@@ -50,13 +50,23 @@ void Camera::update(Vector3* pos){
 }
 
 void Camera::drawCamera(){
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(
-		pos->x, pos->y, pos->z,
-		dir->x, dir->y, dir->z,
-		up->x,up->y,up->z
-	);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		gluLookAt(
+			pos->x, pos->y, pos->z,
+			dir->x, dir->y, dir->z,
+			up->x,up->y,up->z
+		);
+		
+		char texto[30];
+		sprintf(texto, "Horizontal Angle = %.3f", horizontalAngle);
+		drawText(texto,14, 0, 14);
+		sprintf(texto, "Vertical Angle = %.3f", verticalAngle);
+		drawText(texto,12,0,12);
+		sprintf(texto, "Up: {%0.3f,%0.3f,%0.3f}", up->x,up->y,up->z);
+		drawText(texto,10, 0, 10);
+		sprintf(texto, "Vertical Angle = %.3f", verticalAngle);
+		drawText(texto,12,0,12);
 }
 
 void Camera::updateAngleFPSCamera(int x, int y){
