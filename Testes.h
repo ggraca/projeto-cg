@@ -21,5 +21,7 @@
 #define LARANJA 0.5,1,0,1
 #define VERMELHO 1,0,0,1
 #define PI		 3.14159
+#define DEGREE_TO_RAD PI/180
+#define RAD_TO_DEGREE 180/PI
 
 using namespace std;
