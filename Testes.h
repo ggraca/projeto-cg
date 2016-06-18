@@ -14,9 +14,15 @@
 #include <GL/gl.h>
 #endif
 
+#ifdef _WIN32
 #include "utils\gameobject.h"
 #include "utils\camera.h"
 #include "utils\input.h"
+#else
+#include "utils/gameobject.h"
+#include "utils/camera.h"
+#include "utils/input.h"
+#endif
 
 #define LARANJA 0.5,1,0,1
 #define VERMELHO 1,0,0,1

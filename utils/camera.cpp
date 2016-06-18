@@ -1,7 +1,7 @@
 #include "camera.h"
 
 
-Camera::Camera(Vector3* pos, Vector3* dir,Vector3* up){
+Camera::Camera(Vector3* pos, Vector3* dir, Vector3* up){
   this->pos = pos;
   this->dir = dir;
   this->up = up;
@@ -10,9 +10,6 @@ Camera::Camera(Vector3* pos, Vector3* dir,Vector3* up){
 
 
 void Camera::update(){
-	this->pos = pos;
-	this->dir = dir;
-	this->up = up;
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(

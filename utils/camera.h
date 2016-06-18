@@ -10,7 +10,7 @@
 #include <GLUT/glut.h>
 #else
 #include <GL/glut.h>
-#include<GL/glu.h>
+#include <GL/glu.h>
 #include <GL/gl.h>
 #endif
 
@@ -24,14 +24,12 @@ using namespace std;
 class Camera{
   public:
     Vector3* pos;
-	Vector3* dir;
-	Vector3* up;
-	
+  	Vector3* dir;
+  	Vector3* up;
+
 	Camera(Vector3* pos, Vector3* dir,Vector3* up);
     void update();
 
-	
+
 };
 #endif /* CAMERA_H */
-
-extern Camera * camera1;

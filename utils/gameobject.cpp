@@ -28,6 +28,5 @@ void GameObject::update(){
 
 void GameObject::draw(){
   glColor4f(1.0, 0.0, 0.0, 0.5);
-  glutSolidTorus (0.5, 1, 20, 20);
-  //glutSolidTeapot (bule);
+  glutSolidTeapot (0.5);
 }
