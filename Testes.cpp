@@ -1,5 +1,5 @@
 #include "Testes.h"
-#include <string>
+
 
 GLint wSizeW, wSizeH,wPosX,wPosY;
 GLfloat bule=0.5;
@@ -11,7 +11,11 @@ Vector3 *obsUpVector = new Vector3(0,1,0);
 Vector3 *obsLookAt = new Vector3(3,0,3);
 Vector3 *obsPos = new Vector3(0,0,0);
 GLfloat mouseX, mouseY,lastMouseX,lastMouseY;
-Camera *cam = new Camera(obsPos,obsLookAt,obsUpVector);
+Camera *cam = new Camera(obsPos,obsLookAt,obsUpVector,0,0,0,0,1);
+
+GLfloat mouseSpeed = 1;
+GLfloat horizontalAngle =0;
+GLfloat verticalAngle =0;
 
 int initValues(){
 	wPosX=0;
@@ -22,19 +26,11 @@ int initValues(){
 	mouseY= wSizeH/2;
 	currentTime = glutGet(GLUT_ELAPSED_TIME);
 	
+	cam->updateWindowSize(wSizeW,wSizeH);
+	cam->updateMouseSensitivity(mouseSpeed);
+	
 }
 
-GLfloat mouseSpeed = 1;
-GLfloat horizontalAngle =0;
-GLfloat verticalAngle =0;
-
-void desenhaTexto(char *string, GLfloat x, GLfloat y, GLfloat z) 
-{  
-	glColor4f(1,1,1,1); //NOTA: Definir previamente o VERMELHO
-	glRasterPos3f(x,y,z); 
-	while (*string)
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *string++); 
-}
 
 void drawPerspective(){
 	
@@ -43,25 +39,6 @@ void drawPerspective(){
 	gluPerspective(65.0, (GLdouble) wSizeW/wSizeH,1,100.0);
 }
 
-int drawAxis(){
-	glPushMatrix();
-		glColor4f(1,0,0,1);
-		glBegin(GL_LINES);
-			glVertex3i( -100, 0, 0); 
-			glVertex3i(100, 0, 0); 
-		glEnd();
-		glColor4f(0,1,0,1);
-		glBegin(GL_LINES);
-			glVertex3i(0,  -100, 0); 
-			glVertex3i(0, 100, 0); 
-		glEnd();
-		glColor4f(0,0,1,1);
-		glBegin(GL_LINES);
-			glVertex3i( 0, 0, -100); 
-			glVertex3i( 0, 0,100); 
-		glEnd();
-	glPopMatrix();
-}
 
 void drawScene(){
 	
@@ -105,13 +82,6 @@ void drawScene(){
 
 
 
-void updateCameraDirection(){
-	
-    obsLookAt->x = (GLfloat)(cos(verticalAngle*DEGREE_TO_RAD) * sin(horizontalAngle*DEGREE_TO_RAD));
-    obsLookAt->y = (GLfloat)sin(verticalAngle*DEGREE_TO_RAD);
-    obsLookAt->z = (GLfloat)(cos(verticalAngle*DEGREE_TO_RAD) * cos(horizontalAngle*DEGREE_TO_RAD));
-}
-
 void display(){
 	
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -125,11 +95,8 @@ void display(){
 		//Observer
 		glMatrixMode( GL_MODELVIEW );
 		glLoadIdentity();
-		cam->pos=obsPos;
-		cam->dir=obsLookAt;
-		cam->up=obsUpVector;
-		cam->update();
 		
+		cam->drawCamera();
 		drawScene();
 		
 		
@@ -151,9 +118,9 @@ void display(){
 		
 		char texto[30];
 		sprintf(texto, "Horizontal Angle = %.3f", horizontalAngle);
-		desenhaTexto(texto,14, 0, 14);
+		drawText(texto,14, 0, 14);
 		sprintf(texto, "Vertical Angle = %.3f", verticalAngle);
-		desenhaTexto(texto,12,0,12);
+		drawText(texto,12,0,12);
 		
 		drawScene();
 		
@@ -176,47 +143,10 @@ void display(){
 	glutPostRedisplay();	
 }*/
 
-Vector3 *crossproduct(Vector3* v1, Vector3* v2){
 
-	Vector3* v3 = new Vector3(
-					(v1->z*v2->y) - (v1->y*v2->z),
-					(v1->x*v2->y) - (v1->y*v2->x),
-					(v1->x*v2->z) - (v1->z*v2->x));
 
-	return v3;
-}
 
-void updateUpVector(){
-	//Right vector * Direction vector = up vector
-	// Right vector
-	Vector3 *obsRightVector = new Vector3(
-									sin(horizontalAngle*DEGREE_TO_RAD - 3.14f/2.0f),
-									0,
-									cos(horizontalAngle*DEGREE_TO_RAD - 3.14f/2.0f));
-	
-	obsUpVector = crossproduct(obsRightVector, obsLookAt);
-}
 
-void updateMousePos(int x, int y){
-	
-	// This variable is hack to stop glutWarpPointer from triggering an event callback to Mouse(...)
-    // This avoids it being called recursively and hanging up the event loop
-	static bool just_warped = false;
-
-    if(just_warped) {
-        just_warped = false;
-        return;
-    }
-		
-	float diffx=-(x-wSizeW/2); //check the difference between the current x and the last x position
-	float diffy=-(y-wSizeH/2); //check the difference between the current y and the last y position
-
-	verticalAngle += (float) diffy*mouseSpeed * (deltaTime/1000);; //set the xrot to xrot with the addition of the difference in the y position
-	horizontalAngle += (float) diffx*mouseSpeed * (deltaTime/1000);;// set the xrot to yrot with the addition of the difference in the x position
-	
-	glutWarpPointer(wSizeW/2,wSizeH/2);
-	just_warped = true;
-}
 
 /*void cameraAngleUpdate(){
 
@@ -239,8 +169,13 @@ void idle (void)
    //Corre sempre que o glut acabe de fazer calculos
     updateDeltaTime();
 	//cameraAngleUpdate();
-	updateCameraDirection();
+	cam->update(obsPos);
+	
     glutPostRedisplay ();
+}
+
+void mouseListener(int x, int y){
+	cam->updateAngleFPSCamera(x,y);
 }
 
 int main(int argc, char** argv){
@@ -261,7 +196,7 @@ int main(int argc, char** argv){
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
 	//glutSpecialFunc(teclasNotAscii);
-	glutPassiveMotionFunc(updateMousePos); //Detectar movimento no rato sem butoes do rato premidos
+	glutPassiveMotionFunc(mouseListener); //Detectar movimento no rato sem butoes do rato premidos
 	
 	glutMainLoop();
 }

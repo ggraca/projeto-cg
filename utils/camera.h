@@ -14,7 +14,13 @@
 #include <GL/gl.h>
 #endif
 
+
 #include "utils.h"
+
+#define PI		 3.14159
+#define DEGREE_TO_RAD PI/180
+#define RAD_TO_DEGREE 180/PI
+
 
 using namespace std;
 
@@ -22,13 +28,21 @@ using namespace std;
 #define CAMERA_H
 
 class Camera{
-  public:
-    Vector3* pos;
-	Vector3* dir;
-	Vector3* up;
-	
-	Camera(Vector3* pos, Vector3* dir,Vector3* up);
-    void update();
+	public:
+		Camera(Vector3* pos, Vector3* dir,Vector3* up, GLfloat hangle,GLfloat vangle,GLfloat windowW,GLfloat windowH, GLfloat msense);
+		void update(Vector3* pos, Vector3* dir, GLfloat hangle,GLfloat vangle);
+		void drawCamera();
+		void updateAngleFPSCamera(int x, int y);
+		void updateWindowSize(GLfloat wwidth, GLfloat wheight);
+		void update(Vector3* pos);
+		void updateMouseSensitivity(GLfloat msense);
+	private:
+		Vector3* pos;
+		Vector3* dir;
+		Vector3* up;
+		GLfloat horizontalAngle, verticalAngle, width, height,mouseSensitivity,lastTime,currentTime,deltaTime;
+		void updateUpVector();
+		void updateDirection();
 
 	
 };

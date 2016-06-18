@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #include <vector>
 #include <math.h>
+#include <string>
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
