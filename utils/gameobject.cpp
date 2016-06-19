@@ -5,6 +5,7 @@ GameObject::GameObject(Vector3* a){
   this->rot = new Vector3(0, 0, 0);
   this->mov = new Vector3(0, 0, 0);
   this->ang_mov = new Vector3(0, 0, 0);
+  this->friction = 0.01;
 }
 
 void GameObject::add_child(GameObject* go){
@@ -12,10 +13,21 @@ void GameObject::add_child(GameObject* go){
 }
 
 void GameObject::update(){
-  this->pos->x += this->mov->x * elapsedTime;
-  this->pos->y += this->mov->y * elapsedTime;
-  this->pos->z += this->mov->z * elapsedTime;
-  printf("%f --- %f\n", this->mov->z, elapsedTime);
+  this->mov->x -= this->mov->x * this->friction;
+  this->mov->y -= this->mov->y * this->friction;
+  this->mov->z -= this->mov->z * this->friction;
+
+  this->ang_mov->x -= this->ang_mov->x * this->friction;
+  this->ang_mov->y -= this->ang_mov->y * this->friction;
+  this->ang_mov->z -= this->ang_mov->z * this->friction;
+
+  this->pos->x += this->mov->x * elapsedTime * 0.01;
+  this->pos->y += this->mov->y * elapsedTime * 0.01;
+  this->pos->z += this->mov->z * elapsedTime * 0.01;
+
+  this->rot->x += this->ang_mov->x * elapsedTime * 0.01;
+  this->rot->y += this->ang_mov->y * elapsedTime * 0.01;
+  this->rot->z += this->ang_mov->z * elapsedTime * 0.01;
 
   glPushMatrix();
 

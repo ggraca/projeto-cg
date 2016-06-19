@@ -19,6 +19,7 @@ class GameObject{
     Vector3* rot;
     Vector3* mov;
     Vector3* ang_mov;
+    float friction;
     vector<GameObject*> children;
 
     GameObject(Vector3* a);

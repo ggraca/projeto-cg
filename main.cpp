@@ -20,14 +20,14 @@ void initWorld(){
 	go_list.push_back((GameObject*)new Stone(new Vector3(0, 0, 1)));
 
 	Stone* test = new Stone(new Vector3(3, 0, 4));
-	test->mov->z = 0.01;
+	test->mov->z = 1.5;
 	go_list.push_back((GameObject*)test);
 
 	Vector3 *obsPos = new Vector3(2,1,0);
 	Vector3 *obsLookAt = new Vector3(0,20,0);
 	GLfloat horizontalAngle =0;
 	GLfloat verticalAngle =0;
-	GLfloat mouseSpeed = 1;
+	GLfloat mouseSpeed = 2;
 	cam = new Camera(obsPos,obsLookAt,horizontalAngle,verticalAngle,wSizeW,wSizeH,mouseSpeed);
 
 	//-------------------------------------------------------------------
@@ -90,7 +90,6 @@ void update(int v){
 
 	/*if(elapsedTime < 1000/maxFps)
 		sleep(1000/maxFps - elapsedTime);
-
 	*/
 	glutPostRedisplay();
 	glutTimerFunc(1000/maxFps,update, 1);
@@ -100,8 +99,12 @@ void mouseListener(int x, int y){
 	cam->updateAngleFPSCamera(x,y);
 }
 
-void arrowslistener(int key, int x, int y){
+void arrowsListener(int key, int x, int y){
 	cam->cameraArrows(key,x,y);
+}
+
+void keyboardListener(unsigned char key, int x, int y){
+	cam->cameraAWSD( key,  x,  y);
 }
 
 int main(int argc, char** argv){
@@ -122,7 +125,9 @@ int main(int argc, char** argv){
 	//glutFullScreen();
 
 	glutDisplayFunc(display);
-	glutSpecialFunc(arrowslistener);
+	glutSpecialFunc(arrowsListener);
+	glutKeyboardFunc(keyboardListener);
+
 	glutPassiveMotionFunc(mouseListener);
 	glutTimerFunc(1000/maxFps, update, 1);
 
