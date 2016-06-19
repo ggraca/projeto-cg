@@ -26,6 +26,7 @@ class Camera{
 		void updateWindowSize(GLfloat wwidth, GLfloat wheight);
 		void updateMouseSensitivity(GLfloat msense);
 		GLfloat horizontalAngle, verticalAngle;
+		void cameraArrows(int key, int x, int y);
 	private:
 		Vector3* pos;
 		Vector3* dir;

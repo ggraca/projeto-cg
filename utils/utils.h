@@ -18,7 +18,7 @@ class Vector3{
 		void print();
 	};
 
-void drawText(char *string, Vector3 * v);
+void drawText(char *string, Vector3* v);
 
 void drawAxis();
 
