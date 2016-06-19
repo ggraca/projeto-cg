@@ -26,8 +26,9 @@ void initWorld(){
 	Vector3 *obsLookAt = new Vector3(0,0,0);
 	GLfloat horizontalAngle =0;
 	GLfloat verticalAngle =0;
-	GLfloat mouseSpeed = 2;
-	cam = new Camera(obsPos,obsLookAt,horizontalAngle,verticalAngle,wSizeW,wSizeH,mouseSpeed);
+	GLfloat mouseSpeed = 3;
+	GLfloat moveSpeed = 6;
+	cam = new Camera(obsPos,obsLookAt,horizontalAngle,verticalAngle,wSizeW,wSizeH,mouseSpeed,moveSpeed);
 
 	//-------------------------------------------------------------------
 
@@ -89,11 +90,14 @@ void display(){
 void update(int v){
 	lastTime = currentTime;
 	currentTime = glutGet(GLUT_ELAPSED_TIME);
-  elapsedTime = float(currentTime - lastTime);
+	elapsedTime = float(currentTime - lastTime);
 
 	/*if(elapsedTime < 1000/maxFps)
 		sleep(1000/maxFps - elapsedTime);
 	*/
+	
+	cam->deltaTime = elapsedTime/1000;
+	
 	glutPostRedisplay();
 	glutTimerFunc(1000/maxFps,update, 1);
 }
@@ -108,6 +112,7 @@ void arrowsListener(int key, int x, int y){
 
 void keyboardListener(unsigned char key, int x, int y){
 	cam->cameraAWSD( key,  x,  y);
+	keyboard(key,x,y);
 }
 
 int main(int argc, char** argv){
@@ -115,8 +120,12 @@ int main(int argc, char** argv){
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize (wSizeW, wSizeH);
 	glutInitWindowPosition (0, 0);
+	
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING); 
+	
 	glutCreateWindow ("OpenGL - Projeto");
-
+	
 	//glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
