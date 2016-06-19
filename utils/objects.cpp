@@ -1,5 +1,4 @@
 #include "objects.h"
-#include "math.h"
 
 void Stone::draw(){
   this->rot->x += 3;

@@ -1,6 +1,5 @@
 #include "camera.h"
 
-
 Camera::Camera(Vector3* pos, Vector3* dir, GLfloat hangle,GLfloat vangle,GLfloat windowW,GLfloat windowH, GLfloat msense){
   this->pos = pos;
   this->dir = dir;
@@ -24,27 +23,24 @@ void Camera::updateWindowSize(GLfloat wwidth,GLfloat wheight){
 }
 
 void Camera::updateDirection(){
-
 	this->dir->x = (GLfloat)(cos(verticalAngle*DEGREE_TO_RAD) * sin(horizontalAngle*DEGREE_TO_RAD));
-    this->dir->y = (GLfloat)sin(verticalAngle*DEGREE_TO_RAD);
-    this->dir->z = (GLfloat)(cos(verticalAngle*DEGREE_TO_RAD) * cos(horizontalAngle*DEGREE_TO_RAD));
+  this->dir->y = (GLfloat)sin(verticalAngle*DEGREE_TO_RAD);
+  this->dir->z = (GLfloat)(cos(verticalAngle*DEGREE_TO_RAD) * cos(horizontalAngle*DEGREE_TO_RAD));
 }
 
 void Camera::updateUpVector(){
 	//Right vector * Direction vector = up vector
-	// Right vector
+	//Right vector
 	Vector3 *obsRightVector = new Vector3(
-									sin(horizontalAngle*DEGREE_TO_RAD - 3.14f/2.0f),
-									0,
-									cos(horizontalAngle*DEGREE_TO_RAD - 3.14f/2.0f));
+  	sin(horizontalAngle*DEGREE_TO_RAD - 3.14f/2.0f),
+    0,
+  	cos(horizontalAngle*DEGREE_TO_RAD - 3.14f/2.0f)
+  );
 
 	this->up = Vector3::crossproduct(obsRightVector,this->dir);
 }
 
-
-void Camera::update(Vector3* pos){
-	this->pos = pos;
-
+void Camera::update(){
 	updateDirection();
 	updateUpVector();
 }

@@ -20,30 +20,29 @@ Vector3*  Vector3::crossproduct(Vector3* v1, Vector3* v2){
 	return v3;
 }
 
-void drawText(char *string, GLfloat x, GLfloat y, GLfloat z) 
-{  
+void drawText(char *string, GLfloat x, GLfloat y, GLfloat z){
 	glColor4f(1,1,1,1); //NOTA: Definir previamente o VERMELHO
-	glRasterPos3f(x,y,z); 
+	glRasterPos3f(x,y,z);
 	while (*string)
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *string++); 
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *string++);
 }
 
-int drawAxis(){
+void drawAxis(){
 	glPushMatrix();
 		glColor4f(1,0,0,1); //X axis
 		glBegin(GL_LINES);
-			glVertex3i( -100, 0, 0); 
-			glVertex3i(100, 0, 0); 
+			glVertex3i( -100, 0, 0);
+			glVertex3i(100, 0, 0);
 		glEnd();
 		glColor4f(0,1,0,1);
 		glBegin(GL_LINES);  //Y axis
-			glVertex3i(0,  -100, 0); 
-			glVertex3i(0, 100, 0); 
+			glVertex3i(0,  -100, 0);
+			glVertex3i(0, 100, 0);
 		glEnd();
 		glColor4f(0,0,1,1);
 		glBegin(GL_LINES);  //Z axis
-			glVertex3i( 0, 0, -100); 
-			glVertex3i( 0, 0,100); 
+			glVertex3i( 0, 0, -100);
+			glVertex3i( 0, 0,100);
 		glEnd();
 	glPopMatrix();
 }

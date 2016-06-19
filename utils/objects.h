@@ -1,4 +1,5 @@
 #include "gameobject.h"
+#include "math.h"
 
 #ifndef OBJECTS_H
 #define OBJECTS_H
