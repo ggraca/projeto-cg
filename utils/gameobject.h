@@ -1,18 +1,17 @@
+#include <GL/glut.h>
+#include <GL/glu.h>
+#include <GL/gl.h>
+
 #include <stdio.h>
 #include <vector>
 
-#ifdef __APPLE__
-#include <OpenGL/OpenGL.h>
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#include<GL/glu.h>
-#include <GL/gl.h>
-#endif
-
 #include "utils.h"
-
 using namespace std;
+
+//-----------------------------------------------------
+
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
 
 class GameObject{
   public:
@@ -23,7 +22,9 @@ class GameObject{
     vector<GameObject*> children;
 
     GameObject(Vector3* a);
-    void update();
-    void draw();
     void add_child(GameObject* go);
+    void update();
+    virtual void draw();
 };
+
+#endif //GAMEOBJECT_H

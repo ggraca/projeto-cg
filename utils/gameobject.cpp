@@ -13,21 +13,21 @@ void GameObject::add_child(GameObject* go){
 
 void GameObject::update(){
   glPushMatrix();
+
+    glTranslatef(this->pos->x, this->pos->y, this->pos->z);
     glRotatef(rot->x, 1, 0, 0);
     glRotatef(rot->y, 0, 1, 0);
     glRotatef(rot->z, 0, 0, 1);
 
-    glTranslatef(this->pos->x, this->pos->y, this->pos->z);
-
     for(int i = 0; i < (int)children.size(); i++)
-      children[i]->update();
+    children[i]->update();
 
     this->draw();
+
   glPopMatrix();
 }
 
 void GameObject::draw(){
   glColor4f(1.0, 0.0, 0.0, 0.5);
-  glutSolidTorus (0.5, 1, 20, 20);
-  //glutSolidTeapot (bule);
+  glutSolidTeapot (0.5);
 }
