@@ -109,6 +109,7 @@ void arrowsListener(int key, int x, int y){
 
 void keyboardListener(unsigned char key, int x, int y){
 	cam->cameraAWSD( key,  x,  y);
+	keyboard(key,x,y);
 }
 
 int main(int argc, char** argv){

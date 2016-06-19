@@ -106,7 +106,6 @@ void Camera::cameraAWSD(unsigned char key, int x, int y){
 					break;
 		case 'r':	resetCamera();
 					break;
-		case 27: exit(0); break;
 	}
 }
 
