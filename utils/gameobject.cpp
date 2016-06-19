@@ -12,6 +12,11 @@ void GameObject::add_child(GameObject* go){
 }
 
 void GameObject::update(){
+  this->pos->x += this->mov->x * elapsedTime;
+  this->pos->y += this->mov->y * elapsedTime;
+  this->pos->z += this->mov->z * elapsedTime;
+  printf("%f --- %f\n", this->mov->z, elapsedTime);
+
   glPushMatrix();
 
     glTranslatef(this->pos->x, this->pos->y, this->pos->z);
@@ -20,7 +25,7 @@ void GameObject::update(){
     glRotatef(rot->z, 0, 0, 1);
 
     for(int i = 0; i < (int)children.size(); i++)
-    children[i]->update();
+      children[i]->update();
 
     this->draw();
 

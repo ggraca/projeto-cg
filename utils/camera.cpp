@@ -61,14 +61,14 @@ void Camera::drawCamera(){
 
 void Camera::cameraArrows(int key, int x, int y){
     if(key == GLUT_KEY_UP)
-		this->verticalAngle += (float) mouseSensitivity;
-	if(key == GLUT_KEY_DOWN) 
-		this->verticalAngle -= (float) mouseSensitivity;
+		this->verticalAngle += (float) mouseSensitivity*5;
+	if(key == GLUT_KEY_DOWN)
+		this->verticalAngle -= (float) mouseSensitivity*5;
 	if(key == GLUT_KEY_LEFT)
-		this->horizontalAngle += (float) mouseSensitivity; 
-	if(key == GLUT_KEY_RIGHT) 
-		this->horizontalAngle -= (float) mouseSensitivity;  
-	
+		this->horizontalAngle += (float) mouseSensitivity*5; 
+	if(key == GLUT_KEY_RIGHT)
+		this->horizontalAngle -= (float) mouseSensitivity*5;  
+
 }
 
 void Camera::updateAngleFPSCamera(int x, int y){

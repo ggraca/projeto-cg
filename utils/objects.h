@@ -5,7 +5,7 @@
 #ifndef OBJECTS_H
 #define OBJECTS_H
 
-class Stone : GameObject{
+class Stone : public GameObject{
   public:
     Stone(Vector3* pos) : GameObject(pos){};
     void draw();

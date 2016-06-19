@@ -2,7 +2,10 @@
 
 
 GLint wSizeW = 800, wSizeH = 600;
-GLfloat currentTime, lastTime,deltaTime;
+GLfloat currentTime, lastTime, deltaTime;
+
+int maxFps = 30;
+float elapsedTime = 0, previousTime = 0;
 
 Camera *cam;
 vector<GameObject*> go_list;
@@ -11,18 +14,23 @@ GLuint  texture[2];
 RgbImage imag;
 
 void initWorld(){
+
 	go_list.push_back((GameObject*)new Field(new Vector3(0, 0, 0)));
 	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, 0)));
 	go_list.push_back((GameObject*)new Stone(new Vector3(0, 0, 1)));
-	go_list.push_back((GameObject*)new Stone(new Vector3(3, 0, 4)));
 
-	Vector3 *obsPos = new Vector3(-2,2,-5);
+	Stone* test = new Stone(new Vector3(3, 0, 4));
+	test->mov->z = 0.01;
+	go_list.push_back((GameObject*)test);
+
+	Vector3 *obsPos = new Vector3(2,1,0);
 	Vector3 *obsLookAt = new Vector3(0,20,0);
 	GLfloat horizontalAngle =0;
 	GLfloat verticalAngle =0;
 	GLfloat mouseSpeed = 1;
 	cam = new Camera(obsPos,obsLookAt,horizontalAngle,verticalAngle,wSizeW,wSizeH,mouseSpeed);
 
+	//-------------------------------------------------------------------
 
 	glGenTextures(1, &texture[0]);
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
@@ -38,6 +46,8 @@ void initWorld(){
 		imag.GetNumRows(), 0, GL_RGB, GL_UNSIGNED_BYTE,
 		imag.ImageData()
 	);
+
+	//-------------------------------------------------------------------
 }
 
 
@@ -49,28 +59,9 @@ void drawPerspective(){
 
 
 void drawScene(){
-
-	/*
-	//Camera
-	glPushMatrix();
-		glTranslatef(obsPos->x,obsPos->y,obsPos->z);
-		glRotatef(0,horizontalAngle,0,0);
-		glColor4f(1,1,1,1); //NOTA: Definir previamente o VERMELHO
-		glBegin(GL_QUADS);
-			glVertex3f( -1, 0, -1);
-			glVertex3f(1, 0, -1);
-			glVertex3f(1, 0, 1);
-			glVertex3f(-1, 0, 1);
-		glEnd();
-	glPopMatrix();
-	*/
-
 	for(int i = 0; i < (int)go_list.size(); i++)
 		go_list[i]->update();
-
 }
-
-
 
 void display(){
 
@@ -89,32 +80,20 @@ void display(){
 		drawScene();
 	glPopMatrix();
 
-	/*
-	glPushMatrix();
-		glViewport (0,0,wSizeW/3, wSizeH/3);
-		//Perspective
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(-16, 16, -16,16, -16,16);
-		//Observer
-		glMatrixMode( GL_MODELVIEW );
-		glLoadIdentity();
-		gluLookAt( 0,10,0, 0, 0, 0, 0.0, 0.0, -1.0 ); //observador: onde est�, para onde olha e qual a direc��o do up vector.
-
-		drawScene();
-	glPopMatrix();
-	*/
 	glutSwapBuffers();
 }
 
-void updateDeltaTime(){
+void update(int v){
 	lastTime = currentTime;
 	currentTime = glutGet(GLUT_ELAPSED_TIME);
-  deltaTime = float(currentTime - lastTime);
-}
+  elapsedTime = float(currentTime - lastTime);
 
-void idle(){
-  glutPostRedisplay ();
+	/*if(elapsedTime < 1000/maxFps)
+		sleep(1000/maxFps - elapsedTime);
+
+	*/
+	glutPostRedisplay();
+	glutTimerFunc(1000/maxFps,update, 1);
 }
 
 void mouseListener(int x, int y){
@@ -136,18 +115,16 @@ int main(int argc, char** argv){
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(GL_TRUE);
+	glShadeModel(GL_SMOOTH);
 
 	initWorld();
-
-
-	glShadeModel(GL_SMOOTH);
 
 	//glutFullScreen();
 
 	glutDisplayFunc(display);
-	glutIdleFunc(idle);
-	glutSpecialFunc(arrowslistener); 
+	glutSpecialFunc(arrowslistener);
 	glutPassiveMotionFunc(mouseListener);
+	glutTimerFunc(1000/maxFps, update, 1);
 
 	glutMainLoop();
 }

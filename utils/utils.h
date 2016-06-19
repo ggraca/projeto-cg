@@ -16,12 +16,13 @@ class Vector3{
 		static Vector3* crossproduct(Vector3* v1, Vector3* v2);
 		static Vector3* normalizeVector(Vector3* v);
 		void print();
-	};
+};
 
 void drawText(char *string, Vector3* v);
 
 void drawAxis();
 
 extern GLuint texture[2];
+extern float elapsedTime;
 
 #endif //UTILS_H
