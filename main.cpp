@@ -10,8 +10,8 @@ vector<GameObject*> go_list;
 void initWorld(){
 	go_list.push_back((GameObject*)new Stone(new Vector3(0, 0, 0)));
 
-	Vector3 *obsPos = new Vector3(0,0,5);
-	Vector3 *obsLookAt = new Vector3(3,0,3);
+	Vector3 *obsPos = new Vector3(5,0,0);
+	Vector3 *obsLookAt = new Vector3(0,0,0);
 	GLfloat horizontalAngle =0;
 	GLfloat verticalAngle =0;
 	GLfloat mouseSpeed = 1;

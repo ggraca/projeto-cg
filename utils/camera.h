@@ -19,7 +19,7 @@
 
 class Camera{
 	public:
-		Camera(Vector3* pos, Vector3* dir, GLfloat hangle,GLfloat vangle,GLfloat windowW,GLfloat windowH, GLfloat msense);
+		Camera(Vector3* pos, Vector3* dir, GLfloat hangle, GLfloat vangle, GLfloat windowW, GLfloat windowH, GLfloat msense);
 		void update();
 		void drawCamera();
 		void updateAngleFPSCamera(int x, int y);
