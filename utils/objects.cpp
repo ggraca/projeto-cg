@@ -105,10 +105,10 @@ void Field::draw(){
   glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D,texture[0]);
   glBegin(GL_QUADS);
-    glTexCoord2f(0.0f,0.0f); glVertex3f(-w, 0, -l);
-    glTexCoord2f(100.0f,0.0f); glVertex3f(w, 0, -l);
-    glTexCoord2f(100.0f,100.0f); glVertex3f(w, 0, l);
-    glTexCoord2f(0.0f,100.0f); glVertex3f(-w, 0, l);
+    glTexCoord2f(0, 0); glVertex3f(-w, 0, -l);
+    glTexCoord2f(w, 0); glVertex3f(w, 0, -l);
+    glTexCoord2f(w, l); glVertex3f(w, 0, l);
+    glTexCoord2f(0, l); glVertex3f(-w, 0, l);
   glEnd();
   glDisable(GL_TEXTURE_2D);
 

@@ -20,9 +20,18 @@ Vector3*  Vector3::crossproduct(Vector3* v1, Vector3* v2){
 	return v3;
 }
 
-void drawText(char *string, GLfloat x, GLfloat y, GLfloat z){
+Vector3* Vector3::normalizeVector(Vector3* v){
+	GLfloat magnitude = sqrt((v->x * v->x) + (v->y * v->y) + (v->z * v->z));
+	
+	Vector3 * result = new Vector3(v->x/magnitude,v->y/magnitude,v->z/magnitude);
+	
+	return result;
+}
+
+void drawText(char *string, Vector3 * v) 
+{  
 	glColor4f(1,1,1,1); //NOTA: Definir previamente o VERMELHO
-	glRasterPos3f(x,y,z);
+	glRasterPos3f(v->x,v->y,v->z); 
 	while (*string)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *string++);
 }

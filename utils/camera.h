@@ -25,11 +25,12 @@ class Camera{
 		void updateAngleFPSCamera(int x, int y);
 		void updateWindowSize(GLfloat wwidth, GLfloat wheight);
 		void updateMouseSensitivity(GLfloat msense);
+		GLfloat horizontalAngle, verticalAngle;
 	private:
 		Vector3* pos;
 		Vector3* dir;
 		Vector3* up;
-		GLfloat horizontalAngle, verticalAngle, width, height,mouseSensitivity,lastTime,currentTime,deltaTime;
+		GLfloat width, height,mouseSensitivity,lastTime,currentTime,deltaTime;
 		void updateUpVector();
 		void updateDirection();
 };
