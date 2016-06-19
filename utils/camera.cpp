@@ -57,12 +57,20 @@ void Camera::drawCamera(){
 			pos->x+dir->x, pos->y+dir->y, pos->z+dir->z,
 			up->x,up->y,up->z
 		);
-
-	char texto[255];
-	sprintf(texto, "Horizontal Angle = %.3f Vertical Angle = %.3f Camera position: x: %0.3f  y:%0.3f  z:%0.3f ", this-> horizontalAngle,this-> verticalAngle,this->pos->x, this->pos->y,this->pos->z);
-	drawText(texto,dir);
-
 }
+
+void Camera::cameraArrows(int key, int x, int y){
+    if(key == GLUT_KEY_UP)
+		this->verticalAngle += (float) mouseSensitivity;
+	if(key == GLUT_KEY_DOWN) 
+		this->verticalAngle -= (float) mouseSensitivity;
+	if(key == GLUT_KEY_LEFT)
+		this->horizontalAngle += (float) mouseSensitivity; 
+	if(key == GLUT_KEY_RIGHT) 
+		this->horizontalAngle -= (float) mouseSensitivity;  
+	
+}
+
 void Camera::updateAngleFPSCamera(int x, int y){
 
 	// This variable is hack to stop glutWarpPointer from triggering an event callback to Mouse(...)

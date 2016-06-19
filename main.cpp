@@ -121,6 +121,10 @@ void mouseListener(int x, int y){
 	cam->updateAngleFPSCamera(x,y);
 }
 
+void arrowslistener(int key, int x, int y){
+	cam->cameraArrows(key,x,y);
+}
+
 int main(int argc, char** argv){
 	glutInit(&argc, argv);
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -142,6 +146,7 @@ int main(int argc, char** argv){
 
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
+	glutSpecialFunc(arrowslistener); 
 	glutPassiveMotionFunc(mouseListener);
 
 	glutMainLoop();
