@@ -18,6 +18,7 @@ vector<Vector3*> gen_circle(float r, int segments){
 }
 
 void Stone::draw(){
+  glTranslatef(0, 0.5, 0);
   glRotatef(-90, 1, 0, 0);
   glScalef(0.5, 0.5, 0.5);
 
