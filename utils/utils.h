@@ -18,6 +18,11 @@ using namespace std;
 	  public:
 		GLfloat x, y, z;
 		Vector3(GLfloat x, GLfloat y, GLfloat z);
+		static Vector3* crossproduct(Vector3* v1, Vector3* v2);
 		void print();
 	};
 #endif /* VECTOR3_H */
+
+void drawText(char *string, GLfloat x, GLfloat y, GLfloat z);
+
+int drawAxis();
