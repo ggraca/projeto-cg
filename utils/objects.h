@@ -11,11 +11,18 @@ class Stone : GameObject{
     void draw();
 };
 
+class Teapot : GameObject{
+  public:
+    Teapot(Vector3* pos) : GameObject(pos){};
+    void draw();
+};
+
 class Field : GameObject{
   public:
     Field(Vector3* pos) : GameObject(pos){};
     void draw();
     void drawBorder(int width);
 };
+
 
 #endif //OBJECTS_H

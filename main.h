@@ -10,6 +10,7 @@
 
 using namespace std;
 
+#include "lib/RgbImage.h"
 #include "utils/gameobject.h"
 #include "utils/camera.h"
 #include "utils/input.h"

@@ -19,4 +19,6 @@ void drawText(char *string, GLfloat x, GLfloat y, GLfloat z);
 
 void drawAxis();
 
+extern GLuint texture[2];
+
 #endif //UTILS_H

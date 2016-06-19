@@ -97,16 +97,20 @@ void Stone::draw(){
 
 
 void Field::draw(){
+
   //Base (45 * 5)
   GLint w = 5;
   GLint l = 45;
   glColor3f(1.0, 1.0, 1.0);
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D,texture[0]);
   glBegin(GL_QUADS);
-    glVertex3f(-w, 0, -l);
-    glVertex3f(w, 0, -l);
-    glVertex3f(w, 0, l);
-    glVertex3f(-w, 0, l);
+    glTexCoord2f(0.0f,0.0f); glVertex3f(-w, 0, -l);
+    glTexCoord2f(100.0f,0.0f); glVertex3f(w, 0, -l);
+    glTexCoord2f(100.0f,100.0f); glVertex3f(w, 0, l);
+    glTexCoord2f(0.0f,100.0f); glVertex3f(-w, 0, l);
   glEnd();
+  glDisable(GL_TEXTURE_2D);
 
   //Borders
   glColor3f(0.0, 0.0, 1.0);
