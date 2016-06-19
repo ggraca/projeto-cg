@@ -20,7 +20,7 @@ void initWorld(){
 	Vector3 *obsLookAt = new Vector3(0,20,0);
 	GLfloat horizontalAngle =0;
 	GLfloat verticalAngle =0;
-	GLfloat mouseSpeed = 1;
+	GLfloat mouseSpeed = 2;
 	cam = new Camera(obsPos,obsLookAt,horizontalAngle,verticalAngle,wSizeW,wSizeH,mouseSpeed);
 
 
@@ -110,7 +110,7 @@ void display(){
 void updateDeltaTime(){
 	lastTime = currentTime;
 	currentTime = glutGet(GLUT_ELAPSED_TIME);
-  deltaTime = float(currentTime - lastTime);
+	deltaTime = float(currentTime - lastTime);
 }
 
 void idle(){
@@ -121,8 +121,12 @@ void mouseListener(int x, int y){
 	cam->updateAngleFPSCamera(x,y);
 }
 
-void arrowslistener(int key, int x, int y){
+void arrowsListener(int key, int x, int y){
 	cam->cameraArrows(key,x,y);
+}
+
+void keyboardListener(unsigned char key, int x, int y){
+	cam->cameraAWSD( key,  x,  y);
 }
 
 int main(int argc, char** argv){
@@ -146,7 +150,8 @@ int main(int argc, char** argv){
 
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
-	glutSpecialFunc(arrowslistener); 
+	glutSpecialFunc(arrowsListener); 
+	glutKeyboardFunc(keyboardListener);
 	glutPassiveMotionFunc(mouseListener);
 
 	glutMainLoop();

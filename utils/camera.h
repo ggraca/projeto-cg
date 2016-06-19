@@ -27,13 +27,18 @@ class Camera{
 		void updateMouseSensitivity(GLfloat msense);
 		GLfloat horizontalAngle, verticalAngle;
 		void cameraArrows(int key, int x, int y);
+		void cameraAWSD(unsigned char key, int x, int y);
+		GLfloat keyboardDeltaTime;
 	private:
 		Vector3* pos;
 		Vector3* dir;
 		Vector3* up;
-		GLfloat width, height,mouseSensitivity,lastTime,currentTime,deltaTime;
+		Vector3 *obsRightVector;
+		GLfloat width, height,mouseSensitivity,mouseLastTime,mouseCurrentTime,mouseDeltaTime,movespeed;
 		void updateUpVector();
 		void updateDirection();
+		void updateMouseDeltaTime();
+		void updateKeyboardDeltaTime();
 };
 
 extern Camera *cam;
