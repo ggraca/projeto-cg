@@ -19,7 +19,7 @@
 
 class Camera{
 	public:
-		Camera(Vector3* pos, Vector3* dir, GLfloat hangle, GLfloat vangle, GLfloat windowW, GLfloat windowH, GLfloat msense);
+		Camera(Vector3* pos, Vector3* dir, GLfloat hangle, GLfloat vangle, GLfloat windowW, GLfloat windowH, GLfloat msense,GLfloat mspeed);
 		void update();
 		void drawCamera();
 		void updateAngleFPSCamera(int x, int y);
@@ -28,13 +28,14 @@ class Camera{
 		GLfloat horizontalAngle, verticalAngle;
 		void cameraArrows(int key, int x, int y);
 		void cameraAWSD(unsigned char key, int x, int y);
-		GLfloat keyboardDeltaTime;
+		void resetCamera();
+		GLfloat deltaTime;
 	private:
-		Vector3* pos;
-		Vector3* dir;
+		Vector3* pos,*initialPos;
+		Vector3* dir,*initialDir;
 		Vector3* up;
 		Vector3 *obsRightVector;
-		GLfloat width, height,mouseSensitivity,mouseLastTime,mouseCurrentTime,mouseDeltaTime,movespeed;
+		GLfloat width, height,mouseSensitivity,movespeed;
 		void updateUpVector();
 		void updateDirection();
 		void updateMouseDeltaTime();
