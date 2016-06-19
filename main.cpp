@@ -20,11 +20,10 @@ void initWorld(){
 	go_list.push_back((GameObject*)new Stone(new Vector3(0, 0, 1)));
 
 	Stone* test = new Stone(new Vector3(3, 0, 4));
-	test->mov->z = 1.5;
 	go_list.push_back((GameObject*)test);
 
-	Vector3 *obsPos = new Vector3(2,1,0);
-	Vector3 *obsLookAt = new Vector3(0,20,0);
+	Vector3 *obsPos = new Vector3(30,30,0);
+	Vector3 *obsLookAt = new Vector3(0,0,0);
 	GLfloat horizontalAngle =0;
 	GLfloat verticalAngle =0;
 	GLfloat mouseSpeed = 2;
@@ -60,7 +59,11 @@ void drawPerspective(){
 
 void drawScene(){
 	for(int i = 0; i < (int)go_list.size(); i++)
-		go_list[i]->update();
+		go_list[i]->earlyUpdate_();
+	for(int i = 0; i < (int)go_list.size(); i++)
+		go_list[i]->update_();
+	for(int i = 0; i < (int)go_list.size(); i++)
+		go_list[i]->draw_();
 }
 
 void display(){
