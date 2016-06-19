@@ -20,7 +20,6 @@ Vector3*  Vector3::crossproduct(Vector3* v1, Vector3* v2){
 	return v3;
 }
 
-<<<<<<< HEAD
 void drawText(char *string, Vector3 * v) 
 {  
 	glColor4f(1,1,1,1); //NOTA: Definir previamente o VERMELHO
