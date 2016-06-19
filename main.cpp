@@ -4,7 +4,7 @@
 GLint wSizeW = 800, wSizeH = 600;
 GLfloat currentTime, lastTime, deltaTime;
 
-int maxFps = 30;
+int maxFps = 60;
 float elapsedTime = 0, previousTime = 0;
 
 Camera *cam;
@@ -14,10 +14,12 @@ GLuint  texture[2];
 RgbImage imag;
 
 void initWorld(){
-
+	srand (time(NULL));
 	go_list.push_back((GameObject*)new Field(new Vector3(0, 0, 0)));
 	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, 0)));
-	go_list.push_back((GameObject*)new Stone(new Vector3(0, 0, 1)));
+	go_list.push_back((GameObject*)new Stone(new Vector3(4, 0, 35)));
+	go_list.push_back((GameObject*)new Stone(new Vector3(3, 0, 25)));
+	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, -10)));
 
 	Stone* test = new Stone(new Vector3(3, 0, 4));
 	go_list.push_back((GameObject*)test);
@@ -95,9 +97,9 @@ void update(int v){
 	/*if(elapsedTime < 1000/maxFps)
 		sleep(1000/maxFps - elapsedTime);
 	*/
-	
+
 	cam->deltaTime = elapsedTime/1000;
-	
+
 	glutPostRedisplay();
 	glutTimerFunc(1000/maxFps,update, 1);
 }
@@ -120,12 +122,12 @@ int main(int argc, char** argv){
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize (wSizeW, wSizeH);
 	glutInitWindowPosition (0, 0);
-	
+
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_LIGHTING); 
-	
+	glEnable(GL_LIGHTING);
+
 	glutCreateWindow ("OpenGL - Projeto");
-	
+
 	//glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);

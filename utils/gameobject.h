@@ -31,5 +31,6 @@ class GameObject{
     virtual void draw(){};
 };
 
+extern vector<GameObject*> go_list;
 
 #endif //GAMEOBJECT_H

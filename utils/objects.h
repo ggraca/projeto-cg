@@ -10,6 +10,7 @@ class Stone : public GameObject{
     Vector3* mov;
     Vector3* ang_mov;
     float friction;
+    float radius;
 
     Stone(Vector3* pos);
 
@@ -25,6 +26,7 @@ class Field : GameObject{
     Field(Vector3* pos) : GameObject(pos){};
     void draw();
     void drawBorder(int width);
+    void drawTarget();
 };
 
 
