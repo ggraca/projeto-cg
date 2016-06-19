@@ -18,10 +18,11 @@ vector<Vector3*> gen_circle(float r, int segments){
 }
 
 void Stone::draw(){
-  //this->rot->x += 3;
+  glRotatef(-90, 1, 0, 0);
+  glScalef(0.5, 0.5, 0.5);
 
   //Torus
-  glColor4f(1.0, 0.0, 0.0, 0.5);
+  glColor3f(1.0, 0.0, 0.0);
   glutSolidTorus (0.5, 1, 20, 20);
 
 
@@ -30,7 +31,7 @@ void Stone::draw(){
   float r;
   vector<Vector3*> coords;
 
-  glColor4f(0.0, 0.0, 1.0, 0.5);
+  glColor3f(0.0, 0.0, 1.0);
   glPushMatrix();
 
 
@@ -92,4 +93,93 @@ void Stone::draw(){
     glEnd();
 
   glPopMatrix();
+}
+
+
+void Field::draw(){
+  //Base (45 * 5)
+  GLint w = 5;
+  GLint l = 45;
+  glColor3f(1.0, 1.0, 1.0);
+  glBegin(GL_QUADS);
+    glVertex3f(-w, 0, -l);
+    glVertex3f(w, 0, -l);
+    glVertex3f(w, 0, l);
+    glVertex3f(-w, 0, l);
+  glEnd();
+
+  //Borders
+  glColor3f(0.0, 0.0, 1.0);
+  glPushMatrix();
+    glTranslatef(0, 0, l);
+    glRotatef(0, 0, 0, 0);
+    this->drawBorder(w);
+  glPopMatrix();
+  glPushMatrix();
+    glTranslatef(0, 0, -l);
+    glRotatef(180, 0, 1, 0);
+    this->drawBorder(w);
+  glPopMatrix();
+  glPushMatrix();
+    glTranslatef(w, 0, 0);
+    glRotatef(90, 0, 1, 0);
+    this->drawBorder(l);
+  glPopMatrix();
+  glPushMatrix();
+    glTranslatef(-w, 0, 0);
+    glRotatef(-90, 0, 1, 0);
+    this->drawBorder(l);
+  glPopMatrix();
+}
+
+void Field::drawBorder(GLint w){
+  //Front
+  glBegin(GL_QUADS);
+    glVertex3f(-w, 0, 0);
+    glVertex3f(w, 0, 0);
+    glVertex3f(w, 1, 0.5);
+    glVertex3f(-w, 1, 0.5);
+  glEnd();
+
+  //Back
+  glBegin(GL_QUADS);
+    glVertex3f(w, 1, 1);
+    glVertex3f(-w, 1, 1);
+    glVertex3f(-w, 0, 1);
+    glVertex3f(w, 0, 1);
+  glEnd();
+
+  //Right
+  glBegin(GL_QUADS);
+    glVertex3f(w, 1, 0.5);
+    glVertex3f(w, 1, 1);
+    glVertex3f(w, 0, 1);
+    glVertex3f(w, 0, 0);
+  glEnd();
+
+  //Left
+  glBegin(GL_QUADS);
+    glVertex3f(-w, 1, 1);
+    glVertex3f(-w, 1, 0.5);
+    glVertex3f(-w, 0, 0);
+    glVertex3f(-w, 0, 1);
+  glEnd();
+
+  //Top
+  glBegin(GL_QUADS);
+    glVertex3f(-w, 1, 1);
+    glVertex3f(w, 1, 1);
+    glVertex3f(w, 1, 0.5);
+    glVertex3f(-w, 1, 0.5);
+  glEnd();
+
+  /*
+  //Bottom
+  glBegin(GL_QUADS);
+    glVertex3f(-w, 0, 1);
+    glVertex3f(w, 0, 1);
+    glVertex3f(w, 0, 0);
+    glVertex3f(-w, 0, 0);
+  glEnd();
+  */
 }

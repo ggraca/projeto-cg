@@ -8,10 +8,13 @@ Camera *cam;
 vector<GameObject*> go_list;
 
 void initWorld(){
-	go_list.push_back((GameObject*)new Stone(new Vector3(0, 0, 0)));
+	go_list.push_back((GameObject*)new Field(new Vector3(0, 0, 0)));
+	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, 0)));
+	go_list.push_back((GameObject*)new Stone(new Vector3(0, 0, 1)));
+	go_list.push_back((GameObject*)new Stone(new Vector3(3, 0, 4)));
 
-	Vector3 *obsPos = new Vector3(5,0,0);
-	Vector3 *obsLookAt = new Vector3(0,0,0);
+	Vector3 *obsPos = new Vector3(-10,10,-10);
+	Vector3 *obsLookAt = new Vector3(0,1,0);
 	GLfloat horizontalAngle =0;
 	GLfloat verticalAngle =0;
 	GLfloat mouseSpeed = 1;
@@ -52,7 +55,7 @@ void drawScene(){
 
 void display(){
 
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//updateCameraDirection();
 	glPushMatrix();
 		glViewport (0,0,wSizeW, wSizeH);
@@ -97,14 +100,18 @@ void idle(){
 
 int main(int argc, char** argv){
 	glutInit(&argc, argv);
-	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize (wSizeW, wSizeH);
 	glutInitWindowPosition (0, 0);
 	glutCreateWindow ("OpenGL - Projeto");
 
+	//glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+	glDepthMask(GL_TRUE);
+
 	initWorld();
 
-	//glClear (GL_COLOR_BUFFER_BIT);
+
 	glShadeModel(GL_SMOOTH);
 
 	//glutFullScreen();

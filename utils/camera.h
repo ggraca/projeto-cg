@@ -32,8 +32,6 @@ class Camera{
 		GLfloat horizontalAngle, verticalAngle, width, height,mouseSensitivity,lastTime,currentTime,deltaTime;
 		void updateUpVector();
 		void updateDirection();
-
-
 };
 
 extern Camera *cam;
