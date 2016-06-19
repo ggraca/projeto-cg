@@ -14,7 +14,7 @@ void initWorld(){
 	go_list.push_back((GameObject*)new Stone(new Vector3(3, 0, 4)));
 
 	Vector3 *obsPos = new Vector3(-10,10,-10);
-	Vector3 *obsLookAt = new Vector3(0,1,0);
+	Vector3 *obsLookAt = new Vector3(0,20,0);
 	GLfloat horizontalAngle =0;
 	GLfloat verticalAngle =0;
 	GLfloat mouseSpeed = 1;
@@ -64,7 +64,8 @@ void display(){
 		//Observer
 		glMatrixMode( GL_MODELVIEW );
 		glLoadIdentity();
-
+		
+		cam->update();
 		cam->drawCamera();
 		drawScene();
 	glPopMatrix();
@@ -94,8 +95,11 @@ void updateDeltaTime(){
 }
 
 void idle(){
-	cam->update();
   glutPostRedisplay ();
+}
+
+void mouseListener(int x, int y){
+	cam->updateAngleFPSCamera(x,y);
 }
 
 int main(int argc, char** argv){

@@ -11,7 +11,3 @@ void keyboard(unsigned char key, int x, int y){
         break;
     }
 }
-
-void mouseListener(int x, int y){
-	cam->updateAngleFPSCamera(x,y);
-}

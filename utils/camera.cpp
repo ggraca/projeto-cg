@@ -26,6 +26,8 @@ void Camera::updateDirection(){
 	this->dir->x = (GLfloat)(cos(verticalAngle*DEGREE_TO_RAD) * sin(horizontalAngle*DEGREE_TO_RAD));
   this->dir->y = (GLfloat)sin(verticalAngle*DEGREE_TO_RAD);
   this->dir->z = (GLfloat)(cos(verticalAngle*DEGREE_TO_RAD) * cos(horizontalAngle*DEGREE_TO_RAD));
+  
+  this->dir = Vector3::normalizeVector(this->dir);
 }
 
 void Camera::updateUpVector(){
@@ -36,7 +38,9 @@ void Camera::updateUpVector(){
     0,
   	cos(horizontalAngle*DEGREE_TO_RAD - 3.14f/2.0f)
   );
-
+	
+	obsRightVector = Vector3::normalizeVector(obsRightVector);
+	
 	this->up = Vector3::crossproduct(obsRightVector,this->dir);
 }
 
@@ -50,7 +54,7 @@ void Camera::drawCamera(){
 		glLoadIdentity();
 		gluLookAt(
 			pos->x, pos->y, pos->z,
-			dir->x, dir->y, dir->z,
+			pos->x+dir->x, pos->y+dir->y, pos->z+dir->z,
 			up->x,up->y,up->z
 		);
 		
@@ -79,8 +83,8 @@ void Camera::updateAngleFPSCamera(int x, int y){
     deltaTime = float(currentTime - lastTime);
 
 
-	this->verticalAngle += (float) diffy*mouseSensitivity * (deltaTime/1000);; //set the xrot to xrot with the addition of the difference in the y position
-	this->horizontalAngle += (float) diffx*mouseSensitivity * (deltaTime/1000);;// set the xrot to yrot with the addition of the difference in the x position
+	this->verticalAngle += (float) diffy*mouseSensitivity * (deltaTime/1000);//set the xrot to xrot with the addition of the difference in the y position
+	this->horizontalAngle += (float) diffx*mouseSensitivity * (deltaTime/1000);// set the xrot to yrot with the addition of the difference in the x position
 
 	printf("Vert: %0.3f  Hor: %0.3f\n", verticalAngle, horizontalAngle);
 	glutWarpPointer(width/2,height/2);
