@@ -22,4 +22,6 @@ void drawText(char *string, Vector3* v);
 
 void drawAxis();
 
+extern GLuint texture[2];
+
 #endif //UTILS_H
