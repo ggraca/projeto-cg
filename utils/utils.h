@@ -23,6 +23,6 @@ using namespace std;
 	};
 #endif /* VECTOR3_H */
 
-void drawText(char *string, GLfloat x, GLfloat y, GLfloat z);
+void drawText(char *string, Vector3 * v);
 
 int drawAxis();
