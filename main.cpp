@@ -63,7 +63,7 @@ void initWorld(){
 		go_list.push_back((GameObject*)s);
 	}
 
-	go_list.push_back((GameObject*)new Glass(new Vector3(0, 1, 0), new Vector3(0, 90, 0)));
+	go_list.push_back((GameObject*)new Glass(new Vector3(0, 1, 0)));
 
 
 	//Stones

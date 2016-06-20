@@ -34,6 +34,7 @@ class Vector3{
 };
 
 vector<Vector3*> gen_circle(float r, int segments);
+void drawMesh(float malha, float w, float h, float ratio, float h_inc);
 void drawText(char *string, Vector3* v);
 void drawAxis();
 

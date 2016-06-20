@@ -81,25 +81,25 @@ void Field::draw(){
     glTranslatef(0, 0, l);
     glRotatef(0, 0, 0, 0);
     this->drawBorder(w+1);
-    this->drawStairs(w+1, 2);
+    this->drawStair(w+1, 2);
   glPopMatrix();
   glPushMatrix();
     glTranslatef(0, 0, -l);
     glRotatef(180, 0, 1, 0);
     this->drawBorder(w+1);
-    this->drawStairs(w+1, 2);
+    this->drawStair(w+1, 2);
   glPopMatrix();
   glPushMatrix();
     glTranslatef(w, 0, 0);
     glRotatef(90, 0, 1, 0);
     this->drawBorder(l+1);
-    this->drawStairs(l+1, 2);
+    this->drawStair(l+1, 2);
   glPopMatrix();
   glPushMatrix();
     glTranslatef(-w, 0, 0);
     glRotatef(-90, 0, 1, 0);
     this->drawBorder(l+1);
-    this->drawStairs(l+1, 2);
+    this->drawStair(l+1, 2);
   glPopMatrix();
 }
 
@@ -144,6 +144,7 @@ void Field::drawBorder(int w){
   glColor3f(1.0, 1.0, 1.0);
   glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D,texture[1]);
+  /*
   //Front
   glBegin(GL_QUADS);
     glTexCoord3f(w/2, 1, 1); glVertex3f(-w, 1, 1);
@@ -151,35 +152,18 @@ void Field::drawBorder(int w){
     glTexCoord3f(0, 0, 0); glVertex3f(w, 0, 0);
     glTexCoord3f(w/2, 0, 0); glVertex3f(-w, 0, 0);
   glEnd();
-  glDisable(GL_TEXTURE_2D);
+*/
 
-/*
-  //Front
+  float l = sqrt(2);
   glPushMatrix();
-    float malha = 0.1;
-    float ti=0;
-    for(float i= -w; i<w;i+=malha){ //Ineficiente desenha 2 vezes o mesmo vertice mas yolo
-      float tj = 0;
-      for(float j=0; j<1;j+=malha){
-
-        glBegin(GL_QUADS);
-          glNormal3f(0,0,-1);  glTexCoord2f(ti, tj);                  glVertex3f(i, j, 0);
-          glNormal3f(0,0,-1);  glTexCoord2f(ti + malha, tj);          glVertex3f(i+malha, j, 0);
-          glNormal3f(0,0,-1);  glTexCoord2f(ti + malha, tj + malha);  glVertex3f(i+malha, j+malha, 0);
-          glNormal3f(0,0,-1);  glTexCoord2f(ti, tj + malha);          glVertex3f(i, j+malha, 0);
-        glEnd();
-
-        tj+=malha;
-        if(tj > 1 - malha) tj -= 1 - malha;
-      }
-      ti+=malha;
-      if(ti > 1 - malha) ti -= 1 - malha;
-    }
+    glTranslatef(0, 0.5, 0.5);
+    glRotatef(45, 1, 0, 0);
+    drawMesh(0.2, w, l/2, 500/97, l);
   glPopMatrix();
-  */
+  glDisable(GL_TEXTURE_2D);
 }
 
-void Field::drawStairs(int w, int n){
+void Field::drawStair(int w, int n){
   glColor3f(0.5, 0.5, 0.5);
 
   glTranslatef(0, 1, 1);

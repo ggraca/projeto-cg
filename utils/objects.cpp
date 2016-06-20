@@ -189,50 +189,43 @@ void Stone::draw(){
   glPopMatrix();
 }
 
-Glass::Glass(Vector3* pos, Vector3* rot) : GameObject(pos){
-  this->rot = rot;
+void Glass::drawPanel(int w){
+  glPushMatrix();
+    glTranslatef(0, 2, 0.5);
+
+    glBegin(GL_QUADS);
+      glVertex3f(-w - 0.5, 3, 0);
+      glVertex3f(w + 0.5, 3, 0);
+      glVertex3f(w + 0.5, 0, 0);
+      glVertex3f(-w - 0.5, 0, 0);
+    glEnd();
+
+  glPopMatrix();
 }
 
 void Glass::lateDraw(){
-  int i, segments = 20;
-  vector<Vector3*> coords;
+
+  int l = 45 + 1, w = 5 + 1;
 
   glColor4f(0.4, 0.8, 0.95, 0.5);
-
-  //Body
   glPushMatrix();
-    glTranslatef(0, 1, 0);
-
-    glBegin(GL_QUADS);
-      glVertex3f(-1, 0, 0);
-      glVertex3f(1, 0, 0);
-      glVertex3f(1, -1, 0);
-      glVertex3f(-1, -1, 0);
-    glEnd();
-
-    segments = 20;
-    coords = gen_circle(1, segments);
-
-    glBegin(GL_POLYGON);
-
-    for(i = 0; i <= segments/2; i++)
-      glVertex2f(coords[i]->x, coords[i]->y);
-
-    glEnd();
+    glTranslatef(0, 0, l);
+    glRotatef(0, 0, 0, 0);
+    this->drawPanel(w);
   glPopMatrix();
-
-  //Head
   glPushMatrix();
-    glTranslatef(0, 2.4, 0);
-
-    segments = 20;
-    coords = gen_circle(0.5, segments);
-
-    glBegin(GL_POLYGON);
-
-      for(i = 0; i < segments; i++)
-        glVertex2f(coords[i]->x, coords[i]->y);
-
-    glEnd();
+    glTranslatef(0, 0, -l);
+    glRotatef(0, 0, 0, 0);
+    this->drawPanel(w);
+  glPopMatrix();
+  glPushMatrix();
+    glTranslatef(w, 0, 0);
+    glRotatef(90, 0, 1, 0);
+    this->drawPanel(l);
+  glPopMatrix();
+  glPushMatrix();
+    glTranslatef(-w, 0, 0);
+    glRotatef(-90, 0, 1, 0);
+    this->drawPanel(l);
   glPopMatrix();
 }

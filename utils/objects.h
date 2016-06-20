@@ -30,13 +30,14 @@ class Field : GameObject{
     void draw();
     void drawTarget();
     void drawBorder(int width);
-    void drawStairs(int width, int n);
+    void drawStair(int width, int n);
 };
 
 class Glass : public GameObject{
   public:
-    Glass(Vector3* pos, Vector3* rot);
+    Glass(Vector3* pos) : GameObject(pos){};
     void lateDraw();
+    void drawPanel(int w);
 };
 
 class Spectator : public GameObject{

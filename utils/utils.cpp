@@ -99,6 +99,33 @@ vector<Vector3*> gen_circle(float r, int segments){
   return coords;
 }
 
+void drawMesh(float malha, float w, float h, float ratio, float h_unit){
+  glPushMatrix();
+    glRotatef(180, 0, 1, 0);
+    float i, j, ti, tj, w_inc, h_inc;
+
+    h_inc = malha/h_unit;
+    w_inc = h_inc/ratio;
+
+    ti = 0;
+    for(i = -w; i < w; i += malha){
+      tj = 0;
+      for(j = -h; j < h; j += malha){
+
+        glBegin(GL_QUADS);
+          glNormal3f(0,0,1);  glTexCoord2f(ti, tj + h_inc);                  glVertex3f(i, j+malha, 0);
+          glNormal3f(0,0,1);  glTexCoord2f(ti + w_inc, tj + h_inc);          glVertex3f(i+malha, j+malha, 0);
+          glNormal3f(0,0,1);  glTexCoord2f(ti + w_inc, tj);                  glVertex3f(i+malha, j, 0);
+          glNormal3f(0,0,1);  glTexCoord2f(ti, tj);                          glVertex3f(i, j, 0);
+        glEnd();
+
+        tj+=h_inc;
+      }
+      ti+=w_inc;
+    }
+  glPopMatrix();
+}
+
 void drawText(char *string, Vector3 * v)
 {
 	glColor4f(1,1,1,1); //NOTA: Definir previamente o VERMELHO
