@@ -23,6 +23,18 @@ void Stone::draw(){
   glScalef(0.5, 0.5, 0.5);
 
   //Torus
+    
+  
+  //Não funciona ainda pk torus não tem normais
+  float specReflection[4] = {0.332741, 0.328634,0.346435, 1.0f }; //Obsidian values
+  float difReflection[4] = {0.18275,0.17,0.22525,1.0};
+  float ambientReflection[4] = {0.05375,0.05,0.06625,1.0};
+  
+  glMaterialfv(GL_FRONT, GL_SPECULAR, specReflection);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, difReflection);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, difReflection);
+  glMaterialf(GL_FRONT, GL_SHININESS, 0.3*128);
+  
   glColor3f(1.0, 0.0, 0.0);
   glutSolidTorus (0.5, 1, 20, 20);
 
@@ -31,11 +43,26 @@ void Stone::draw(){
   int i, j, segments;
   float r;
   vector<Vector3*> coords;
+  
+  
+  specReflection[0] = 0.50196078; //Cyan plastic values
+  specReflection[1] = 0.50196078;
+  specReflection[3] = 0.50196078;
 
+  difReflection[0] = 0.0;
+  difReflection[1] = 0.50980392;
+  difReflection[2] = 0.50980392;
+  ambientReflection[0] = 0.0;
+  ambientReflection[1] = 0.05;
+  ambientReflection[2] = 0.06;
+  glMaterialfv(GL_FRONT, GL_SPECULAR, specReflection);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, difReflection);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, difReflection);
+
+  glMaterialf(GL_FRONT, GL_SHININESS, 0.25*128);
   glColor3f(0.0, 0.0, 1.0);
+  
   glPushMatrix();
-
-
     //Head
     r = 1.2;
     segments = 20;
@@ -102,7 +129,19 @@ void Field::draw(){
   //Base (45 * 5)
   GLint w = 5;
   GLint l = 45;
+  
+  float  specReflection[4] = {0.296648, 0.296648,0.296648, 1.0f }; //Pearl values
+  float difReflection[4] = {1.0,0.829,0.22525,0.829};
+  float ambientReflection[4] = {0.25 ,0.20725,0.20725,1.0};
+  
+  glMaterialfv(GL_FRONT, GL_SPECULAR, specReflection);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, difReflection);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, difReflection);
+  glMaterialf(GL_FRONT, GL_SHININESS, 0.088*128);
+ 
+  
   glColor3f(1.0, 1.0, 1.0);
+  
   glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D,texture[0]);
   glBegin(GL_QUADS);
@@ -112,7 +151,25 @@ void Field::draw(){
     glTexCoord2f(0, l); glVertex3f(-w, 0, l);
   glEnd();
   glDisable(GL_TEXTURE_2D);
+  
+  
+  
+  specReflection[0] = 0.50196078; //Cyan plastic values
+  specReflection[1] = 0.50196078;
+  specReflection[3] = 0.50196078;
 
+  difReflection[0] = 0.0;
+  difReflection[1] = 0.50980392;
+  difReflection[2] = 0.50980392;
+  ambientReflection[0] = 0.0;
+  ambientReflection[1] = 0.05;
+  ambientReflection[2] = 0.06;
+  glMaterialfv(GL_FRONT, GL_SPECULAR, specReflection);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, difReflection);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, difReflection);
+
+  glMaterialf(GL_FRONT, GL_SHININESS, 0.25*128);
+  
   //Borders
   glColor3f(0.0, 0.0, 1.0);
   glPushMatrix();

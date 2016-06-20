@@ -30,9 +30,11 @@ class Camera{
 		void cameraAWSD(unsigned char key, int x, int y);
 		void resetCamera();
 		GLfloat deltaTime;
+		Vector3 * pos;
+		Vector3* dir;
 	private:
-		Vector3* pos,*initialPos;
-		Vector3* dir,*initialDir;
+		Vector3 *initialPos;
+		Vector3 *initialDir;
 		Vector3* up;
 		Vector3 *obsRightVector;
 		GLfloat width, height,mouseSensitivity,movespeed;

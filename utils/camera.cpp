@@ -26,7 +26,7 @@ void Camera::updateWindowSize(GLfloat wwidth,GLfloat wheight){
 }
 
 void Camera::updateDirection(){
-	this->dir->x = (GLfloat)(cos(verticalAngle*DEGREE_TO_RAD) * sin(horizontalAngle*DEGREE_TO_RAD));
+  this->dir->x = (GLfloat)(cos(verticalAngle*DEGREE_TO_RAD) * sin(horizontalAngle*DEGREE_TO_RAD));
   this->dir->y = (GLfloat)sin(verticalAngle*DEGREE_TO_RAD);
   this->dir->z = (GLfloat)(cos(verticalAngle*DEGREE_TO_RAD) * cos(horizontalAngle*DEGREE_TO_RAD));
 
