@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 GLint wSizeW = 800, wSizeH = 600;
 
 int maxFps = 60;
@@ -34,15 +33,14 @@ void init(){
 void initWorld(){
 	//Field
 	go_list.push_back((GameObject*)new Field(new Vector3(0, 0, 0)));
+	go_list.push_back((GameObject*)new Spectator(new Vector3(0, 0, 0)));
+
 
 	//Stones
 	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, 0)));
 	go_list.push_back((GameObject*)new Stone(new Vector3(4, 0, 35)));
 	go_list.push_back((GameObject*)new Stone(new Vector3(3, 0, 25)));
 	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, -10)));
-
-	Stone* test = new Stone(new Vector3(3, 0, 4));
-	go_list.push_back((GameObject*)test);
 
 	//Camera
 	Vector3 *obsPos = new Vector3(30,30,0);
@@ -74,8 +72,8 @@ void pointLightDef(){
     GLfloat ambientLight[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.2, 1.0f };
 	GLfloat specularLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };
-	
-	 
+
+
 	// Assign created components to GL_LIGHT0
 	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);

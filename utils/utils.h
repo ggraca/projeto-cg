@@ -1,10 +1,12 @@
 #include <stdio.h>
+#include <math.h>
+#include <vector>
 
 #include <GL/glut.h>
 #include <GL/glu.h>
 #include <GL/gl.h>
 
-#include <math.h>
+using namespace std;
 
 #ifndef UTILS_H
 #define UTILS_H
@@ -31,8 +33,8 @@ class Vector3{
 		void print();
 };
 
+vector<Vector3*> gen_circle(float r, int segments);
 void drawText(char *string, Vector3* v);
-
 void drawAxis();
 
 extern GLuint texture[2];

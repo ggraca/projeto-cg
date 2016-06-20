@@ -1,22 +1,5 @@
 #include "objects.h"
 
-using namespace std;
-
-vector<Vector3*> gen_circle(float r, int segments){
-  vector<Vector3*> coords;
-  for(int i = 0; i < segments; i++){
-    float theta = 2.0f * 3.1415926f * float(i) / float(segments);
-
-    coords.push_back(new Vector3(
-      r * cosf(theta),
-      r * sinf(theta),
-      0)
-    );
-  }
-
-  return coords;
-}
-
 Stone::Stone(Vector3* pos) : GameObject(pos){
   this->mov = new Vector3((rand()%100)*0.03, 0, (rand()%100)*0.03);
   this->ang_mov = new Vector3(0, -5, 0);
@@ -77,9 +60,8 @@ void Stone::collision(){
     this->movement();
   }
 
-  //TODO verify object type
-  for(int i = 1; i < (int)go_list.size(); i++){
-    if(this != go_list[i]){
+  for(int i = 0; i < (int)go_list.size(); i++){
+    if(this != go_list[i] && typeid(*go_list[i]) == typeid(Stone)){
       Stone* s = (Stone*)go_list[i];
 
       float dx = abs(this->pos->x - s->pos->x);
@@ -108,18 +90,16 @@ void Stone::draw(){
   glScalef(this->radius, this->radius, this->radius);
 
   //Torus
-    
-  
   //Não funciona ainda pk torus não tem normais
   float specReflection[4] = {0.332741, 0.328634,0.346435, 1.0f }; //Obsidian values
   float difReflection[4] = {0.18275,0.17,0.22525,1.0};
   float ambientReflection[4] = {0.05375,0.05,0.06625,1.0};
-  
+
   glMaterialfv(GL_FRONT, GL_SPECULAR, specReflection);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, difReflection);
   glMaterialfv(GL_FRONT, GL_AMBIENT, difReflection);
   glMaterialf(GL_FRONT, GL_SHININESS, 0.3*128);
-  
+
   glColor3f(1.0, 0.0, 0.0);
   glutSolidTorus (0.5, 1, 20, 20);
 
@@ -128,8 +108,8 @@ void Stone::draw(){
   int i, j, segments;
   float r;
   vector<Vector3*> coords;
-  
-  
+
+
   specReflection[0] = 0.50196078; //Cyan plastic values
   specReflection[1] = 0.50196078;
   specReflection[3] = 0.50196078;
@@ -146,7 +126,7 @@ void Stone::draw(){
 
   glMaterialf(GL_FRONT, GL_SHININESS, 0.25*128);
   glColor3f(0.0, 0.0, 1.0);
-  
+
   glPushMatrix();
     //Head
     r = 1.2;
@@ -206,193 +186,4 @@ void Stone::draw(){
     glEnd();
 
   glPopMatrix();
-}
-
-
-void Field::draw(){
-
-  //Base (45 * 5)
-  GLint w = 5;
-  GLint l = 45;
-  GLfloat wmin =-w;
-  GLfloat wmax = w;
-  GLfloat lmin =-l;
-  GLfloat lmax = l;
-  GLfloat malha = 0.2; //always par please
-  
-  float  specReflection[4] = {0.296648, 0.296648,0.296648, 1.0f }; //Pearl values
-  float difReflection[4] = {1.0,0.829,0.22525,0.829};
-  float ambientReflection[4] = {0.25 ,0.20725,0.20725,1.0};
-  
-  glMaterialfv(GL_FRONT, GL_SPECULAR, specReflection);
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, difReflection);
-  glMaterialfv(GL_FRONT, GL_AMBIENT, difReflection);
-  glMaterialf(GL_FRONT, GL_SHININESS, 0.088*128);
- 
-  
-  glColor3f(1.0, 1.0, 1.0);
-  
-  //glEnable(GL_TEXTURE_2D);
-  //glBindTexture(GL_TEXTURE_2D,texture[0]);
-  /*glTexCoord2f(0, 0); glVertex3f(i, 0, j);
-	glTexCoord2f(1, 0); glVertex3f(i+malha, 0, j);
-	glTexCoord2f(1, 1); glVertex3f(i+malha, 0, j+malha);
-	glTexCoord2f(0, 1); glVertex3f(i, 0, j+malha);*/
-  for(float i= wmin; i<wmax;i+=malha){ //Ineficiente desenha 2 vezes o mesmo vertice mas yolo
-	 for(float j= lmin; j<lmax;j+=malha){
-	  glBegin(GL_QUADS);
-		glNormal3f(0,1,0);
-		glTexCoord2f(0, 0); glVertex3f(i, 0, j);
-		glNormal3f(0,1,0);
-		glTexCoord2f(1, 0); glVertex3f(i+malha, 0, j);
-		glNormal3f(0,1,0);
-		glTexCoord2f(1, 1); glVertex3f(i+malha, 0, j+malha);
-		glNormal3f(0,1,0);
-		glTexCoord2f(0, 1); glVertex3f(i, 0, j+malha);
-	  glEnd();
-	 }
-  }
-  //glDisable(GL_TEXTURE_2D);
-
-  
-  specReflection[0] = 0.50196078; //Cyan plastic values
-  specReflection[1] = 0.50196078;
-  specReflection[3] = 0.50196078;
-
-  difReflection[0] = 0.0;
-  difReflection[1] = 0.50980392;
-  difReflection[2] = 0.50980392;
-  ambientReflection[0] = 0.0;
-  ambientReflection[1] = 0.05;
-  ambientReflection[2] = 0.06;
-  glMaterialfv(GL_FRONT, GL_SPECULAR, specReflection);
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, difReflection);
-  glMaterialfv(GL_FRONT, GL_AMBIENT, difReflection);
-
-  glMaterialf(GL_FRONT, GL_SHININESS, 0.25*128);
-  
-  //TO-DO definir aqui os componentes de luz dos circulos
-  
-  //Circles
-  glPushMatrix();
-    glTranslatef(0, 0, 40);
-    drawTarget();
-  glPopMatrix();
-  glPushMatrix();
-    glTranslatef(0, 0, -40);
-    drawTarget();
-  glPopMatrix();
-
-
-  //Borders
-  glColor3f(0.0, 0.0, 1.0);
-  glPushMatrix();
-    glTranslatef(0, 0, l);
-    glRotatef(0, 0, 0, 0);
-    this->drawBorder(w);
-  glPopMatrix();
-  glPushMatrix();
-    glTranslatef(0, 0, -l);
-    glRotatef(180, 0, 1, 0);
-    this->drawBorder(w);
-  glPopMatrix();
-  glPushMatrix();
-    glTranslatef(w, 0, 0);
-    glRotatef(90, 0, 1, 0);
-    this->drawBorder(l);
-  glPopMatrix();
-  glPushMatrix();
-    glTranslatef(-w, 0, 0);
-    glRotatef(-90, 0, 1, 0);
-    this->drawBorder(l);
-  glPopMatrix();
-}
-
-void Field::drawTarget(){
-  int i, j, segments = 20;
-  vector<Vector3*> inner, outer;
-
-  inner = gen_circle(0.5, segments);
-  outer = gen_circle(1.5, segments);
-
-  glColor3f(1, 0, 0);
-  glBegin(GL_QUADS);
-    for(i = 0; i < segments; i++){
-      if(i == segments - 1) j = 0;
-      else j = i + 1;
-
-      glVertex3f(outer[i]->x, 0.01, outer[i]->y);
-      glVertex3f(outer[j]->x, 0.01, outer[j]->y);
-      glVertex3f(inner[j]->x, 0.01, inner[j]->y);
-      glVertex3f(inner[i]->x, 0.01, inner[i]->y);
-    }
-  glEnd();
-
-  inner = gen_circle(2.5, segments);
-  outer = gen_circle(3.5, segments);
-
-  glColor3f(0, 0, 1);
-  glBegin(GL_QUADS);
-    for(i = 0; i < segments; i++){
-      if(i == segments - 1) j = 0;
-      else j = i + 1;
-
-      glVertex3f(outer[i]->x, 0.01, outer[i]->y);
-      glVertex3f(outer[j]->x, 0.01, outer[j]->y);
-      glVertex3f(inner[j]->x, 0.01, inner[j]->y);
-      glVertex3f(inner[i]->x, 0.01, inner[i]->y);
-    }
-  glEnd();
-}
-
-void Field::drawBorder(GLint w){
-  //Front
-  glBegin(GL_QUADS);
-    glVertex3f(-w, 0, 0);
-    glVertex3f(w, 0, 0);
-    glVertex3f(w, 1, 0.5);
-    glVertex3f(-w, 1, 0.5);
-  glEnd();
-
-  //Back
-  glBegin(GL_QUADS);
-    glVertex3f(w, 1, 1);
-    glVertex3f(-w, 1, 1);
-    glVertex3f(-w, 0, 1);
-    glVertex3f(w, 0, 1);
-  glEnd();
-
-  //Right
-  glBegin(GL_QUADS);
-    glVertex3f(w, 1, 0.5);
-    glVertex3f(w, 1, 1);
-    glVertex3f(w, 0, 1);
-    glVertex3f(w, 0, 0);
-  glEnd();
-
-  //Left
-  glBegin(GL_QUADS);
-    glVertex3f(-w, 1, 1);
-    glVertex3f(-w, 1, 0.5);
-    glVertex3f(-w, 0, 0);
-    glVertex3f(-w, 0, 1);
-  glEnd();
-
-  //Top
-  glBegin(GL_QUADS);
-    glVertex3f(-w, 1, 1);
-    glVertex3f(w, 1, 1);
-    glVertex3f(w, 1, 0.5);
-    glVertex3f(-w, 1, 0.5);
-  glEnd();
-
-  /*
-  //Bottom
-  glBegin(GL_QUADS);
-    glVertex3f(-w, 0, 1);
-    glVertex3f(w, 0, 1);
-    glVertex3f(w, 0, 0);
-    glVertex3f(-w, 0, 0);
-  glEnd();
-  */
 }

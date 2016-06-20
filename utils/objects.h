@@ -1,6 +1,9 @@
 #include "gameobject.h"
 #include "math.h"
 #include <vector>
+#include <typeinfo>
+
+using namespace std;
 
 #ifndef OBJECTS_H
 #define OBJECTS_H
@@ -27,6 +30,12 @@ class Field : GameObject{
     void draw();
     void drawBorder(int width);
     void drawTarget();
+};
+
+class Spectator : GameObject{
+  public:
+    Spectator(Vector3* pos);
+    void draw();
 };
 
 
