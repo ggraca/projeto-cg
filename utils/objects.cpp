@@ -80,7 +80,7 @@ void Stone::collision(){
   //TODO verify object type
   for(int i = 1; i < (int)go_list.size(); i++){
     if(this != go_list[i]){
-      Stone* s = (Stone*)go_list[i];
+	  Stone* s = (Stone*)go_list[i];
 
       float dx = abs(this->pos->x - s->pos->x);
       float dz = abs(this->pos->z - s->pos->z);

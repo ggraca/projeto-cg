@@ -53,10 +53,15 @@ void initWorld(){
 	GLfloat moveSpeed = 20;
 	cam = new Camera(obsPos,obsLookAt,horizontalAngle,verticalAngle,wSizeW,wSizeH,mouseSpeed,moveSpeed);
 
-	//Lights
+	//Lights Vector3* pos, Vector3* lookAt, GLfloat cutoffAngle, GLfloat spotExp, GLenum light,GameObject *target,GLfloat *ambientLight, GLfloat *diffuseLight, GLfloat *specularLight
+	GLfloat ambient[]={ 0.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat diffuse[]= { 0.8f, 0.8f, 0.2, 1.0f };
+	GLfloat specular[]= { 0.3f, 0.3f, 0.3f, 1.0f };
+	go_list.push_back((GameObject*) new Light(new Vector3( -1.5f,12.0f,-4.0f),new Vector3(0,0,0), 5.0f, 100.0f, (GLenum) GL_LIGHT0,(GameObject*)go_list[1],ambient,diffuse,specular));
+	((Light*)(go_list[go_list.size()-1]))->enable();
 }
 
-void ambientLightDef(){
+/*void ambientLightDef(){
 	GLfloat ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 	GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8, 1.0f };
 	GLfloat specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
@@ -68,9 +73,9 @@ void ambientLightDef(){
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
 	glLightfv(GL_LIGHT0, GL_POSITION, position);
 
-}
+}*/
 
-void pointLightDef(){
+/*void pointLightDef(){
     GLfloat ambientLight[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.2, 1.0f };
 	GLfloat specularLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };
@@ -86,7 +91,7 @@ void pointLightDef(){
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, dir);
 	glLightf (GL_LIGHT1, GL_SPOT_EXPONENT , 0.3);
 	glLightf (GL_LIGHT1, GL_SPOT_CUTOFF, 20);
-}
+}*/
 
 void drawScene(){
 
@@ -116,8 +121,8 @@ void display(){
 		cam->drawCamera();
 
 		//Lights
-		pointLightDef();
-		ambientLightDef();
+		//pointLightDef();
+		//ambientLightDef();
 
 		glPushMatrix();
 		glColor4f(1.0,1.0,1.0,1.0);
@@ -160,8 +165,6 @@ int main(int argc, char** argv){
     glEnable(GL_LIGHTING);
     glShadeModel(GL_SMOOTH);
 
-	//glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHT1);
 
 	//glFrontFace(GL_CW);
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
