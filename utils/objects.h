@@ -14,8 +14,10 @@ class Stone : public GameObject{
     Vector3* ang_mov;
     float friction;
     float radius;
+	GLfloat color[3];
+	int player;
 
-    Stone(Vector3* pos);
+    Stone(Vector3* pos, int player);
 
     void draw();
     void earlyUpdate();
@@ -47,5 +49,10 @@ class Spectator : public GameObject{
     void draw();
 };
 
+class Lamp : public GameObject{
+  public:
+    Lamp(Vector3* pos);
+    void draw();
+};
 
 #endif //OBJECTS_H

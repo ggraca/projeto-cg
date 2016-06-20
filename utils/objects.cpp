@@ -1,10 +1,22 @@
 #include "objects.h"
 
-Stone::Stone(Vector3* pos) : GameObject(pos){
+Stone::Stone(Vector3* pos, int player) : GameObject(pos){
   this->mov = new Vector3((rand()%100)*0.03, 0, (rand()%100)*0.03);
   this->ang_mov = new Vector3(0, -5, 0);
   this->friction = 0.01;
   this->radius = 0.25;
+  this->player=player;
+  
+  if (this->player==1){
+	  color[0]=1.0;
+	  color[1]=0.0;
+	  color[2]=0.0;
+  }else{
+	   color[0]=0.0;
+	  color[1]=0.0;
+	  color[2]=1.0;
+  }
+ 
 }
 
 void Stone::earlyUpdate(){
@@ -101,7 +113,7 @@ void Stone::draw(){
   glMaterialfv(GL_FRONT, GL_AMBIENT, difReflection);
   glMaterialf(GL_FRONT, GL_SHININESS, 0.3*128);
 
-  glColor3f(1.0, 0.0, 0.0);
+  glColor3f(0.184314, 0.209804,  0.309804);
   glutSolidTorus (0.5, 1, 20, 20);
 
 
@@ -126,7 +138,7 @@ void Stone::draw(){
   glMaterialfv(GL_FRONT, GL_AMBIENT, difReflection);
 
   glMaterialf(GL_FRONT, GL_SHININESS, 0.25*128);
-  glColor3f(0.0, 0.0, 1.0);
+  glColor3fv(this->color);
 
   glPushMatrix();
     //Head

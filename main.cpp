@@ -68,11 +68,11 @@ void initWorld(){
 
 
 	//Stones
-	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, 0)));
-	go_list.push_back((GameObject*)new Stone(new Vector3(4, 0, 35)));
-	go_list.push_back((GameObject*)new Stone(new Vector3(3, 0, 25)));
-	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, -10)));
-	Stone* test = new Stone(new Vector3(1, 0, -10));
+	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, 0),1));
+	go_list.push_back((GameObject*)new Stone(new Vector3(4, 0, 35),1));
+	go_list.push_back((GameObject*)new Stone(new Vector3(3, 0, 25),1));
+	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, -10),2));
+	Stone* test = new Stone(new Vector3(1, 0, -10),2);
 	go_list.push_back((GameObject*)test);
 
 	//Camera
