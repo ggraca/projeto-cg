@@ -33,6 +33,12 @@ class Field : GameObject{
     void drawStairs(int width, int n);
 };
 
+class Glass : public GameObject{
+  public:
+    Glass(Vector3* pos, Vector3* rot);
+    void lateDraw();
+};
+
 class Spectator : public GameObject{
   public:
     float color[3];

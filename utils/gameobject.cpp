@@ -35,3 +35,18 @@ void GameObject::draw_(){
 
   glPopMatrix();
 }
+
+void GameObject::lateDraw_(){
+  glPushMatrix();
+    glTranslatef(this->pos->x, this->pos->y, this->pos->z);
+    glRotatef(rot->x, 1, 0, 0);
+    glRotatef(rot->y, 0, 1, 0);
+    glRotatef(rot->z, 0, 0, 1);
+
+    for(int i = 0; i < (int)children.size(); i++)
+      children[i]->lateDraw();
+
+    this->lateDraw();
+
+  glPopMatrix();
+}

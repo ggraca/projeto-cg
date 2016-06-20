@@ -25,10 +25,12 @@ class GameObject{
     void earlyUpdate_();
     void update_();
     void draw_();
+    void lateDraw_();
 
     virtual void earlyUpdate(){};
     virtual void update(){};
     virtual void draw(){};
+    virtual void lateDraw(){};
 };
 
 extern vector<GameObject*> go_list;

@@ -63,6 +63,8 @@ void initWorld(){
 		go_list.push_back((GameObject*)s);
 	}
 
+	go_list.push_back((GameObject*)new Glass(new Vector3(0, 1, 0), new Vector3(0, 90, 0)));
+
 
 	//Stones
 	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, 0)));
@@ -104,6 +106,9 @@ void drawScene(){
 		go_list[i]->update_();
 	for(int i = 0; i < (int)go_list.size(); i++)
 		go_list[i]->draw_();
+	for(int i = 0; i < (int)go_list.size(); i++)
+		go_list[i]->lateDraw_();
+
 }
 
 void display(){
@@ -169,8 +174,11 @@ int main(int argc, char** argv){
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 	glEnable(GL_COLOR_MATERIAL);
 
-
 	//Luz-Fim
+
+	//Transparency
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);

@@ -188,3 +188,51 @@ void Stone::draw(){
 
   glPopMatrix();
 }
+
+Glass::Glass(Vector3* pos, Vector3* rot) : GameObject(pos){
+  this->rot = rot;
+}
+
+void Glass::lateDraw(){
+  int i, segments = 20;
+  vector<Vector3*> coords;
+
+  glColor4f(0.4, 0.8, 0.95, 0.5);
+
+  //Body
+  glPushMatrix();
+    glTranslatef(0, 1, 0);
+
+    glBegin(GL_QUADS);
+      glVertex3f(-1, 0, 0);
+      glVertex3f(1, 0, 0);
+      glVertex3f(1, -1, 0);
+      glVertex3f(-1, -1, 0);
+    glEnd();
+
+    segments = 20;
+    coords = gen_circle(1, segments);
+
+    glBegin(GL_POLYGON);
+
+    for(i = 0; i <= segments/2; i++)
+      glVertex2f(coords[i]->x, coords[i]->y);
+
+    glEnd();
+  glPopMatrix();
+
+  //Head
+  glPushMatrix();
+    glTranslatef(0, 2.4, 0);
+
+    segments = 20;
+    coords = gen_circle(0.5, segments);
+
+    glBegin(GL_POLYGON);
+
+      for(i = 0; i < segments; i++)
+        glVertex2f(coords[i]->x, coords[i]->y);
+
+    glEnd();
+  glPopMatrix();
+}
