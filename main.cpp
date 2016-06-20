@@ -81,7 +81,7 @@ void initWorld(){
 	GLfloat horizontalAngle =0;
 	GLfloat verticalAngle =0;
 	GLfloat mouseSpeed = 3;
-	GLfloat moveSpeed = 20;
+	GLfloat moveSpeed = 40;
 	cam = new Camera(obsPos,obsLookAt,horizontalAngle,verticalAngle,wSizeW,wSizeH,mouseSpeed,moveSpeed);
 
 	//Lights Vector3* pos, Vector3* lookAt, GLfloat cutoffAngle, GLfloat spotExp,bool ambient, GLenum light,GameObject *target,GLfloat *ambientLight, GLfloat *diffuseLight, GLfloat *specularLight
