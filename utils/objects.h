@@ -7,14 +7,18 @@
 
 class Stone : public GameObject{
   public:
-    Stone(Vector3* pos) : GameObject(pos){};
-    void draw();
-};
+    Vector3* mov;
+    Vector3* ang_mov;
+    float friction;
+    float radius;
 
-class Teapot : GameObject{
-  public:
-    Teapot(Vector3* pos) : GameObject(pos){};
+    Stone(Vector3* pos);
+
     void draw();
+    void earlyUpdate();
+    void update();
+    void movement();
+    void collision();
 };
 
 class Field : GameObject{
@@ -22,6 +26,7 @@ class Field : GameObject{
     Field(Vector3* pos) : GameObject(pos){};
     void draw();
     void drawBorder(int width);
+    void drawTarget();
 };
 
 

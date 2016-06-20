@@ -4,7 +4,7 @@
 GLint wSizeW = 800, wSizeH = 600;
 GLfloat currentTime, lastTime, deltaTime;
 
-int maxFps = 30;
+int maxFps = 60;
 float elapsedTime = 0, previousTime = 0;
 
 Camera *cam;
@@ -18,17 +18,22 @@ RgbImage imag;
 
 
 void initWorld(){
-
+	srand (time(NULL));
 	go_list.push_back((GameObject*)new Field(new Vector3(0, 0, 0)));
 	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, 0)));
-	go_list.push_back((GameObject*)new Stone(new Vector3(0, 0, 1)));
-	go_list.push_back(new GameObject(new Vector3(-1.5f, 12.0f, -4.0f)));
+
+	go_list.push_back((GameObject*)new Stone(new Vector3(4, 0, 35)));
+	go_list.push_back((GameObject*)new Stone(new Vector3(3, 0, 25)));
+	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, -10)));
+	
+	go_list.push_back(new GameObject(new Vector3(-1.5f, 12.0f, -4.0f))); //Para identificar a luz global
 
 	Stone* test = new Stone(new Vector3(3, 0, 4));
-	test->mov->z = 1.5;
 	go_list.push_back((GameObject*)test);
 
-	Vector3 *obsPos = new Vector3(20,20,0);
+
+	Vector3 *obsPos = new Vector3(30,30,0);
+
 	Vector3 *obsLookAt = new Vector3(0,0,0);
 	GLfloat horizontalAngle =0;
 	GLfloat verticalAngle =0;
@@ -98,7 +103,11 @@ void pointLightDef(){
 void drawScene(){
 	
 	for(int i = 0; i < (int)go_list.size(); i++)
-		go_list[i]->update();
+		go_list[i]->earlyUpdate_();
+	for(int i = 0; i < (int)go_list.size(); i++)
+		go_list[i]->update_();
+	for(int i = 0; i < (int)go_list.size(); i++)
+		go_list[i]->draw_();
 }
 
 void display(){
@@ -142,9 +151,9 @@ void update(int v){
 	/*if(elapsedTime < 1000/maxFps)
 		sleep(1000/maxFps - elapsedTime);
 	*/
-	
+
 	cam->deltaTime = elapsedTime/1000;
-	
+
 	glutPostRedisplay();
 	glutTimerFunc(1000/maxFps,update, 1);
 }
@@ -169,6 +178,7 @@ int main(int argc, char** argv){
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize (wSizeW, wSizeH);
 	glutInitWindowPosition (0, 0);
+
 	glutCreateWindow ("OpenGL - Projeto");
 	//Luz
 	
@@ -186,9 +196,6 @@ int main(int argc, char** argv){
 	glEnable(GL_COLOR_MATERIAL);
 	 
 	//Luz-Fim
-	
-	
-	
 	
 	//glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);

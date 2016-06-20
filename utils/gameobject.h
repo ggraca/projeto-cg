@@ -17,16 +17,20 @@ class GameObject{
   public:
     Vector3* pos;
     Vector3* rot;
-    Vector3* mov;
-    Vector3* ang_mov;
-    float friction;
     vector<GameObject*> children;
 
     GameObject(Vector3* a);
     void add_child(GameObject* go);
-    void update();
-    virtual void draw();
+
+    void earlyUpdate_();
+    void update_();
+    void draw_();
+
+    virtual void earlyUpdate(){};
+    virtual void update(){};
+    virtual void draw(){};
 };
 
+extern vector<GameObject*> go_list;
 
 #endif //GAMEOBJECT_H
