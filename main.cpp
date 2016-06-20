@@ -10,6 +10,9 @@ GLuint  texture[2];
 vector<GameObject*> go_list;
 Field *field;
 
+void gameRules(){
+	int rounds = 8;
+}
 void init(){
 	srand (time(NULL));
 

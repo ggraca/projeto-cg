@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <vector>
-
 #include <GL/glut.h>
 #include <GL/glu.h>
 #include <GL/gl.h>
-
 using namespace std;
 
 #ifndef UTILS_H
@@ -32,6 +30,7 @@ class Vector3{
 		static Vector3* normalizeVector(Vector3* v);
 		void print();
 };
+
 
 vector<Vector3*> gen_circle(float r, int segments);
 void drawText(char *string, Vector3* v);
