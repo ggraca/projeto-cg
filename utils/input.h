@@ -11,5 +11,7 @@
 
 void keyboard(unsigned char key, int x, int y);
 void mouseListener(int x, int y);
+void arrowsListener(int key, int x, int y);
+void keyboardListener(unsigned char key, int x, int y);
 
 #endif //INPUT_H

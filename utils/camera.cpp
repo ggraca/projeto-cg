@@ -66,7 +66,7 @@ void Camera::resetCamera(){
 	this->pos->x = this->initialPos->x;
 	this->pos->y = this->initialPos->y;
 	this->pos->z = this->initialPos->z;
-	
+
 	this->dir->x = this->initialDir->x;
 	this->dir->y = this->initialDir->y;
 	this->dir->z = this->initialDir->z;
@@ -81,9 +81,9 @@ void Camera::cameraArrows(int key, int x, int y){
 	if(key == GLUT_KEY_DOWN)
 		this->verticalAngle -= (float) mouseSensitivity*5;
 	if(key == GLUT_KEY_LEFT)
-		this->horizontalAngle += (float) mouseSensitivity*5; 
+		this->horizontalAngle += (float) mouseSensitivity*5;
 	if(key == GLUT_KEY_RIGHT)
-		this->horizontalAngle -= (float) mouseSensitivity*5;  
+		this->horizontalAngle -= (float) mouseSensitivity*5;
 
 }
 void Camera::cameraAWSD(unsigned char key, int x, int y){
@@ -100,7 +100,7 @@ void Camera::cameraAWSD(unsigned char key, int x, int y){
 					this->pos->y += this->obsRightVector->y *(deltaTime)* movespeed;
 					this->pos->z += this->obsRightVector->z *(deltaTime)* movespeed;
 					break;
-		case 'a': 	this->pos->x -= this->obsRightVector->x *(deltaTime)* movespeed; 
+		case 'a': 	this->pos->x -= this->obsRightVector->x *(deltaTime)* movespeed;
 					this->pos->y -= this->obsRightVector->y *(deltaTime)* movespeed;
 					this->pos->z -= this->obsRightVector->z *(deltaTime)* movespeed;
 					break;

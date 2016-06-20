@@ -20,7 +20,7 @@ vector<Vector3*> gen_circle(float r, int segments){
 Stone::Stone(Vector3* pos) : GameObject(pos){
   this->mov = new Vector3((rand()%100)*0.03, 0, (rand()%100)*0.03);
   this->ang_mov = new Vector3(0, -5, 0);
-  this->friction = 0.00;
+  this->friction = 0.01;
   this->radius = 0.25;
 }
 
@@ -48,6 +48,17 @@ void Stone::movement(){
   this->rot->x += this->ang_mov->x * elapsedTime * 0.01;
   this->rot->y += this->ang_mov->y * elapsedTime * 0.01;
   this->rot->z += this->ang_mov->z * elapsedTime * 0.01;
+
+  if(this->mov->x < 0.001 && this->mov->x > -0.001){
+    this->mov->x = 0;
+    //printf("stop x\n");
+  }
+  if(this->mov->z < 0.001 && this->mov->z > -0.001){
+    this->mov->z = 0;
+    //printf("stop z\n");
+  }
+  if(this->ang_mov->y < 0.001 && this->ang_mov->y > -0.001)
+    this->ang_mov->y = 0;
 }
 
 void Stone::collision(){
