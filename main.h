@@ -16,6 +16,7 @@ using namespace std;
 #include "utils/camera.h"
 #include "utils/input.h"
 #include "utils/objects.h"
+#include "utils/light.h"
 
 #define LARANJA 0.5,1,0,1
 #define VERMELHO 1,0,0,1

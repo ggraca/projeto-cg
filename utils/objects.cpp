@@ -60,6 +60,7 @@ void Stone::collision(){
     this->movement();
   }
 
+
   for(int i = 0; i < (int)go_list.size(); i++){
     if(this != go_list[i] && typeid(*go_list[i]) == typeid(Stone)){
       Stone* s = (Stone*)go_list[i];
