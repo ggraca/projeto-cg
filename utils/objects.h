@@ -32,8 +32,9 @@ class Field : GameObject{
     void drawTarget();
 };
 
-class Spectator : GameObject{
+class Spectator : public GameObject{
   public:
+    float color[3];
     Spectator(Vector3* pos);
     void draw();
 };

@@ -33,7 +33,19 @@ void init(){
 void initWorld(){
 	//Field
 	go_list.push_back((GameObject*)new Field(new Vector3(0, 0, 0)));
-	go_list.push_back((GameObject*)new Spectator(new Vector3(0, 0, 0)));
+
+	//Spectators
+	Spectator* s;
+	for(int i = -44; i <= 44; i += 3){
+
+		s = new Spectator(new Vector3(7, 0, i));
+		s->rot->y = 90;
+		go_list.push_back((GameObject*)s);
+
+		s = new Spectator(new Vector3(-7, 0, i));
+		s->rot->y = 90;
+		go_list.push_back((GameObject*)s);
+	}
 
 
 	//Stones
@@ -69,7 +81,7 @@ void ambientLightDef(){
 }
 
 void pointLightDef(){
-    GLfloat ambientLight[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+  GLfloat ambientLight[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.2, 1.0f };
 	GLfloat specularLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };
 
@@ -78,7 +90,7 @@ void pointLightDef(){
 	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, specularLight);
-    GLfloat pos[]= { -1.5f, 12.0f, -4.0f, 1.0 };//{cam->pos->x, cam->pos->y, cam->pos->z};
+  GLfloat pos[]= { -1.5f, 12.0f, -4.0f, 1.0 };//{cam->pos->x, cam->pos->y, cam->pos->z};
 	glLightfv(GL_LIGHT1, GL_POSITION, pos);
 	GLfloat dir[] = {cam->pos->x-pos[0], cam->pos->y-pos[1], cam->pos->z-pos[2]};//{cam->dir->x,cam->dir->y,cam->dir->z};
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, dir);
@@ -155,7 +167,7 @@ int main(int argc, char** argv){
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_DEPTH_TEST);
     //glEnable(GL_CULL_FACE);
-    glEnable(GL_LIGHTING);
+    //glEnable(GL_LIGHTING);
     glShadeModel(GL_SMOOTH);
 
 	//glEnable(GL_LIGHT0);

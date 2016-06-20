@@ -190,28 +190,49 @@ void Field::drawBorder(GLint w){
 }
 
 Spectator::Spectator(Vector3* pos) : GameObject(pos){
-  ;
+  for(int i = 0; i < 3; i++)
+    this->color[i] = rand()%3 / 2;
 }
 
 void Spectator::draw(){
-  //Head
-  //Body
   int i, j, segments = 20;
   vector<Vector3*> coords;
 
-  coords = gen_circle(0.5, segments);
-  glColor3f(1, 0, 0);
-  glBegin(GL_QUADS);
-    for(i = 0; i < segments; i++){
-      if(i == segments - 1) j = 0;
-      else j = i + 1;
+  glColor3f(this->color[0], this->color[1], this->color[2]);
+  //Body
+  glPushMatrix();
+    glTranslatef(0, 1, 0);
 
-      glVertex3f(coords[i]->x, 0.01, coords[i]->y);
-      glVertex3f(coords[j]->x, 0.01, coords[j]->y);
-      glVertex3f(coords[j]->x, 0.01, coords[j]->y);
-      glVertex3f(coords[i]->x, 0.01, coords[i]->y);
-    }
-  glEnd();
+    glBegin(GL_QUADS);
+      glVertex3f(-1, 0, 0);
+      glVertex3f(1, 0, 0);
+      glVertex3f(1, -1, 0);
+      glVertex3f(-1, -1, 0);
+    glEnd();
 
+    segments = 20;
+    coords = gen_circle(1, segments);
 
+    glBegin(GL_POLYGON);
+
+    for(i = 0; i <= segments/2; i++)
+      glVertex2f(coords[i]->x, coords[i]->y);
+
+    glEnd();
+  glPopMatrix();
+
+  //Head
+  glPushMatrix();
+    glTranslatef(0, 2.4, 0);
+
+    segments = 20;
+    coords = gen_circle(0.5, segments);
+
+    glBegin(GL_POLYGON);
+
+      for(i = 0; i < segments; i++)
+        glVertex2f(coords[i]->x, coords[i]->y);
+
+    glEnd();
+  glPopMatrix();
 }
