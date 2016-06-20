@@ -4,6 +4,7 @@
 Light::Light(Vector3* pos, Vector3* lookAt, GLfloat cutoffAngle, GLfloat spotExp, bool ambient, GLenum light,GameObject* target,GLfloat *ambientLight, GLfloat *diffuseLight, GLfloat *specularLight) : GameObject(pos){
 	this->lookAt=lookAt;
 	this->light=light;
+	this->ambient = ambient;
 
 	this->ambientLight[0] = ambientLight[0];
 	this->ambientLight[1] = ambientLight[1];

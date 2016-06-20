@@ -1,5 +1,6 @@
 #include "objects.h"
 
+GLfloat reflectionAlpha =1.0f;
 
 void Field::draw(){
 
@@ -11,9 +12,10 @@ void Field::draw(){
   GLfloat lmin =-l;
   GLfloat lmax = l;
   GLfloat malha = 0.1; //always par please
-
+  GLfloat textwinc = 1/((w*2)/malha);
+  GLfloat textlinc = 1/((l*2)/malha);
   float  specReflection[4] = {0.296648, 0.296648,0.296648, 1.0f }; //Pearl values
-  float difReflection[4] = {1.0,0.829,0.22525,0.829};
+  float difReflection[4] = {0.829,0.22525,0.829, 1.0f};
   float ambientReflection[4] = {0.25 ,0.20725,0.20725,1.0};
 
   glMaterialfv(GL_FRONT, GL_SPECULAR, specReflection);
@@ -22,27 +24,27 @@ void Field::draw(){
   glMaterialf(GL_FRONT, GL_SHININESS, 0.088*128);
 
 
-  glColor3f(1.0, 1.0, 1.0);
+  glColor4f(1.0, 1.0, 1.0,reflectionAlpha);
 
   glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D,texture[0]);
+  
   float ti=0;
   for(float i= wmin; i<wmax;i+=malha){ //Ineficiente desenha 2 vezes o mesmo vertice mas yolo
     float tj = 0;
     for(float j= lmin; j<lmax;j+=malha){
-
       glBegin(GL_QUADS);
       	glNormal3f(0,1,0);  glTexCoord2f(ti, tj);  glVertex3f(i, 0, j);
-      	glNormal3f(0,1,0);	glTexCoord2f(ti + malha, tj);  glVertex3f(i+malha, 0, j);
-      	glNormal3f(0,1,0);	glTexCoord2f(ti + malha, tj + malha);  glVertex3f(i+malha, 0, j+malha);
-      	glNormal3f(0,1,0);	glTexCoord2f(ti, tj + malha);  glVertex3f(i, 0, j+malha);
+      	glNormal3f(0,1,0);	glTexCoord2f(ti + textlinc, tj);  glVertex3f(i+malha, 0, j);
+      	glNormal3f(0,1,0);	glTexCoord2f(ti + textlinc, tj + textwinc);  glVertex3f(i+malha, 0, j+malha);
+      	glNormal3f(0,1,0);	glTexCoord2f(ti, tj + textwinc);  glVertex3f(i, 0, j+malha);
       glEnd();
 
-      tj+=malha;
-      if(tj > 1 - malha) tj -= 1 - malha;
+      tj+=textlinc;
+      if(tj > 1 - textlinc) tj = 1;
     }
-    ti+=malha;
-    if(ti > 1 - malha) ti -= 1 - malha;
+    ti+=textwinc;
+    if(ti > 1 - textwinc) ti = 1;
   }
   glDisable(GL_TEXTURE_2D);
 
@@ -234,4 +236,42 @@ void Spectator::draw(){
 
     glEnd();
   glPopMatrix();
+}
+
+void Field::drawWithReflections(vector<GameObject*> go_list){
+	//REFLEXÃO 
+	glEnable(GL_STENCIL_TEST); //Activa o uso do stencil buffer
+	glColorMask(0, 0, 0, 0); //Nao escreve no color buffer
+	glDisable(GL_DEPTH_TEST); //Torna inactivo o teste de profundidade
+	glStencilFunc(GL_ALWAYS, 1, 1); //O
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE); //
+	//Coloca a 1 todos os pixels no stencil buffer que representam o chão
+	draw_();
+	
+	glColorMask(1, 1, 1, 1); //Activa a escrita de cor
+	glEnable(GL_DEPTH_TEST); //Activa o teste de profundidade
+	
+	glStencilFunc(GL_EQUAL, 1, 1);//O stencil test passa apenas quando o pixel tem o valor 1 no stencil buffer
+	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP); //Stencil buffer read-only
+	
+	//Desenha o objecto com uma reflexão vertical ond stencil buffer é 1
+	for(int i = 0; i < (int)go_list.size(); i++){
+		glPushMatrix();
+			glScalef(1, -1, 1);
+			go_list[i]->draw_();
+		glPopMatrix();
+	}
+	
+	glDisable(GL_STENCIL_TEST); //Desactiva a utilização do stencil buffer
+	
+    //Blending (para transparência)
+	glPushMatrix();
+		glEnable(GL_BLEND);
+		reflectionAlpha = 0.9;
+		draw();
+		glDisable(GL_BLEND);
+	glPopMatrix();
+	reflectionAlpha = 1.0f;
+	//FIM REFLEXÃO
+	
 }

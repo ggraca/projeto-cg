@@ -113,10 +113,10 @@ void drawMesh(float malha, float w, float h, float ratio, float h_unit){
       for(j = -h; j < h; j += malha){
 
         glBegin(GL_QUADS);
-          glNormal3f(0,0,1);  glTexCoord2f(ti, tj + h_inc);                  glVertex3f(i, j+malha, 0);
-          glNormal3f(0,0,1);  glTexCoord2f(ti + w_inc, tj + h_inc);          glVertex3f(i+malha, j+malha, 0);
-          glNormal3f(0,0,1);  glTexCoord2f(ti + w_inc, tj);                  glVertex3f(i+malha, j, 0);
-          glNormal3f(0,0,1);  glTexCoord2f(ti, tj);                          glVertex3f(i, j, 0);
+          glNormal3f(0,0,1);  glTexCoord2f(ti, tj + h_inc);         glVertex3f(i, j+malha, 0);
+          glNormal3f(0,0,1);  glTexCoord2f(ti + w_inc, tj + h_inc); glVertex3f(i+malha, j+malha, 0);
+          glNormal3f(0,0,1);  glTexCoord2f(ti + w_inc, tj);         glVertex3f(i+malha, j, 0);
+          glNormal3f(0,0,1);  glTexCoord2f(ti, tj);                 glVertex3f(i, j, 0);
         glEnd();
 
         tj+=h_inc;
