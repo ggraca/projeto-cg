@@ -85,7 +85,7 @@ void Stone::collision(){
 }
 
 void Stone::draw(){
-  glTranslatef(0, 0.5, 0);
+  glTranslatef(0, 0.15, 0);
   glRotatef(-90, 1, 0, 0);
   glScalef(this->radius, this->radius, this->radius);
 
