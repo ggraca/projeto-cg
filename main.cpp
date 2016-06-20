@@ -11,7 +11,6 @@ GLuint  texture[2];
 vector<GameObject*> go_list;
 
 void init(){
-
 	srand (time(NULL));
 
 	//TODO create loadtextures()
@@ -57,7 +56,40 @@ void initWorld(){
 	//Lights
 }
 
+void ambientLightDef(){
+	GLfloat ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8, 1.0f };
+	GLfloat specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	GLfloat position[] = { -1.5f, 10.0f, -4.0f, 1.0 };
+
+	// Assign created components to GL_LIGHT0
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+	glLightfv(GL_LIGHT0, GL_POSITION, position);
+
+}
+
+void pointLightDef(){
+  GLfloat ambientLight[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.2, 1.0f };
+	GLfloat specularLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+
+
+	// Assign created components to GL_LIGHT0
+	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, specularLight);
+	GLfloat pos[]= {cam->pos->x, cam->pos->y, cam->pos->z};
+	glLightfv(GL_LIGHT0, GL_POSITION, pos);
+	GLfloat dir[] = {cam->dir->x,cam->dir->y,cam->dir->z};
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, dir);
+	glLightf (GL_LIGHT1, GL_SPOT_EXPONENT , 0.8);
+	glLightf (GL_LIGHT1, GL_SPOT_CUTOFF, 50.0);
+}
+
 void drawScene(){
+
 	for(int i = 0; i < (int)go_list.size(); i++)
 		go_list[i]->earlyUpdate_();
 	for(int i = 0; i < (int)go_list.size(); i++)
@@ -70,6 +102,7 @@ void display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glPushMatrix();
 		glViewport (0,0,wSizeW, wSizeH);
+
 		//Prespective
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -81,6 +114,17 @@ void display(){
 
 		cam->update();
 		cam->drawCamera();
+
+		//Lights
+		pointLightDef();
+		ambientLightDef();
+
+		glPushMatrix();
+		glColor4f(1.0,1.0,1.0,1.0);
+			glTranslatef (0,5,0);
+			glutSolidCube(0.5);
+		glPopMatrix();
+
 		drawScene();
 
 	glPopMatrix();
@@ -109,12 +153,28 @@ int main(int argc, char** argv){
 	glutInitWindowPosition (0, 0);
 	glutCreateWindow ("OpenGL - Projeto");
 
-	glEnable(GL_LIGHTING);
+	//Luz
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_CULL_FACE);
+    glEnable(GL_LIGHTING);
+    glShadeModel(GL_SMOOTH);
+
+	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT1);
+
+	//glFrontFace(GL_CW);
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+	glEnable(GL_COLOR_MATERIAL);
+
+	//Luz-Fim
+
+	//glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
 
 	glDepthMask(GL_TRUE);
-	glShadeModel(GL_SMOOTH);
+
 
 	init();
 	initWorld();
