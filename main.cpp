@@ -9,10 +9,12 @@ Camera *cam;
 GLuint  texture[2];
 vector<GameObject*> go_list;
 Field *field;
+GameLogic* game;
+Light* lightClosest;
+Light* lightCurrent[2];
 
-void gameRules(){
-	int rounds = 8;
-}
+
+
 void init(){
 	srand (time(NULL));
 
@@ -71,15 +73,11 @@ void initWorld(){
 
 
 	//Stones
-	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, 0),1));
-	go_list.push_back((GameObject*)new Stone(new Vector3(4, 0, 35),1));
-	go_list.push_back((GameObject*)new Stone(new Vector3(3, 0, 25),1));
-	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, -10),2));
 	Stone* test = new Stone(new Vector3(1, 0, -10),2);
 	go_list.push_back((GameObject*)test);
 
 	//Camera
-	Vector3 *obsPos = new Vector3(30,30,0);
+	Vector3 *obsPos = new Vector3(0,5,-10);
 	Vector3 *obsLookAt = new Vector3(0,0,0);
 	GLfloat horizontalAngle =0;
 	GLfloat verticalAngle =0;
@@ -87,19 +85,31 @@ void initWorld(){
 	GLfloat moveSpeed = 40;
 	cam = new Camera(obsPos,obsLookAt,horizontalAngle,verticalAngle,wSizeW,wSizeH,mouseSpeed,moveSpeed);
 
-	//Lights Vector3* pos, Vector3* lookAt, GLfloat cutoffAngle, GLfloat spotExp,bool ambient, GLenum light,GameObject *target,GLfloat *ambientLight, GLfloat *diffuseLight, GLfloat *specularLight
-	GLfloat ambient[]={ 0.0f, 0.0f, 0.0f, 1.0f };
-	GLfloat diffuse[]= { 0.8f, 0.8f, 0.2, 1.0f };
-	GLfloat specular[]= { 0.3f, 0.3f, 0.3f, 1.0f };
-
-	//Spot light
-	go_list.push_back((GameObject*) new Light(new Vector3( -1.5f,12.0f,-4.0f),new Vector3(0,0,0), 5.0f, 100.0f, false, (GLenum) GL_LIGHT0,(GameObject*)test,ambient,diffuse,specular));
-	((Light*)(go_list[go_list.size()-1]))->enable();
-
 	//Ambient light
 	GLfloat color[]={0.5f,0.5f,0.5f,1.0f};
 	go_list.push_back((GameObject*) new Light(new Vector3( 0,1000,0),new Vector3(0,1001,0), 0.0f, 0.0f, true, (GLenum) GL_LIGHT1,NULL,color,color,color));
 	((Light*)(go_list[go_list.size()-1]))->enable();
+
+	//Spot lights
+	GLfloat ambient[]={ 0.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat diffuse[]= { 0.8f, 0.8f, 0.2, 1.0f };
+	GLfloat specular[]= { 0.3f, 0.3f, 0.3f, 1.0f };
+
+	lightCurrent[0] = new Light(new Vector3( -7,15,20),new Vector3(0,0,0), 5.0f, 100.0f, false, (GLenum) GL_LIGHT0,NULL,ambient,diffuse,specular);
+	go_list.push_back((GameObject*) lightCurrent[0]);
+	lightCurrent[1] = new Light(new Vector3( 7,15,20),new Vector3(0,0,0), 5.0f, 100.0f, false, (GLenum) GL_LIGHT3,NULL,ambient,diffuse,specular);
+	go_list.push_back((GameObject*) lightCurrent[1]);
+
+	GLfloat diffuse1[]= { 0.2f, 0.8f, 0.4f, 1.0f };
+	GLfloat specular1[]= { 0.3f, 0.3f, 0.3f, 1.0f };
+
+	lightClosest = new Light(new Vector3( 0,15,40),new Vector3(0,0,0), 5.0f, 100.0f, false, (GLenum) GL_LIGHT2,NULL,ambient,diffuse1,specular1);
+	go_list.push_back((GameObject*) lightClosest);
+
+
+
+	game = new GameLogic();
+	game->startRound();
 }
 
 void drawScene(){
@@ -115,6 +125,34 @@ void drawScene(){
 
 	for(int i = 0; i < (int)go_list.size(); i++)
 		go_list[i]->lateDraw_();
+
+	game->update();
+
+	Stone* s = game->getClosestStone();
+	if(s != NULL){
+		lightClosest->target = (GameObject*)s;
+		lightClosest->enable();
+	}
+	else{
+		lightClosest->target = NULL;
+		lightClosest->disable();
+	}
+
+	//
+	s = game->currentStone;
+	if(s != NULL){
+		lightCurrent[0]->target = (GameObject*)s;
+		lightCurrent[0]->enable();
+		lightCurrent[1]->target = (GameObject*)s;
+		lightCurrent[1]->enable();
+	}
+	else{
+		lightCurrent[0]->target = NULL;
+		lightCurrent[0]->disable();
+		lightCurrent[1]->target = NULL;
+		lightCurrent[1]->disable();
+	}
+
 
 }
 

@@ -1,8 +1,8 @@
 #include "objects.h"
 
 Stone::Stone(Vector3* pos, int player) : GameObject(pos){
-  this->mov = new Vector3((rand()%100)*0.03, 0, (rand()%100)*0.03);
-  this->ang_mov = new Vector3(0, -5, 0);
+  this->mov = new Vector3(0, 0, 0);
+  this->ang_mov = new Vector3(0, 0, 0);
   this->friction = 0.01;
   this->radius = 0.25;
   this->player=player;
@@ -12,9 +12,9 @@ Stone::Stone(Vector3* pos, int player) : GameObject(pos){
 	  color[1]=0.0;
 	  color[2]=0.0;
   }else{
-	   color[0]=0.0;
-	  color[1]=0.0;
-	  color[2]=1.0;
+    color[0]=0.0;
+    color[1]=0.0;
+    color[2]=1.0;
   }
 
 }
@@ -44,13 +44,11 @@ void Stone::movement(){
   this->rot->y += this->ang_mov->y * elapsedTime * 0.01;
   this->rot->z += this->ang_mov->z * elapsedTime * 0.01;
 
-  if(this->mov->x < 0.001 && this->mov->x > -0.001){
+  if(this->mov->x < 0.005 && this->mov->x > -0.005){
     this->mov->x = 0;
-    //printf("stop x\n");
   }
-  if(this->mov->z < 0.001 && this->mov->z > -0.001){
+  if(this->mov->z < 0.005 && this->mov->z > -0.005){
     this->mov->z = 0;
-    //printf("stop z\n");
   }
   if(this->ang_mov->y < 0.001 && this->ang_mov->y > -0.001)
     this->ang_mov->y = 0;
@@ -58,7 +56,6 @@ void Stone::movement(){
 
 void Stone::collision(){
   //Field
-  //TODO define field width and lenght somehow
   float r = this->radius;
   int w = 5, l = 45;
 
@@ -81,7 +78,6 @@ void Stone::collision(){
       float dz = abs(this->pos->z - s->pos->z);
 
       if(dx < r && dz < r){
-
         float tx = s->mov->x;
         float tz = s->mov->z;
 
@@ -91,7 +87,7 @@ void Stone::collision(){
         this->mov->x = tx;
         this->mov->z = tz;
 
-        s->movement();
+        this->movement();
       }
     }
   }

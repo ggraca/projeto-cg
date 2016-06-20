@@ -1,10 +1,6 @@
 #include <stdio.h>
-
-#include <GL/glut.h>
-#include <GL/glu.h>
-#include <GL/gl.h>
-
 #include "camera.h"
+#include "gamelogic.h"
 
 #ifndef INPUT_H
 #define INPUT_H

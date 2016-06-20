@@ -14,9 +14,10 @@ using namespace std;
 #include "lib/RgbImage.h"
 #include "utils/gameobject.h"
 #include "utils/camera.h"
-#include "utils/input.h"
 #include "utils/objects.h"
+#include "utils/gamelogic.h"
 #include "utils/light.h"
+#include "utils/input.h"
 
 #define LARANJA 0.5,1,0,1
 #define VERMELHO 1,0,0,1

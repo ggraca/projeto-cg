@@ -1,7 +1,10 @@
+#include <vector>
+
 #include "gameobject.h"
 #include "objects.h"
 #include "math.h"
-#include <vector>
+#include "gamelogic.h"
+
 
 #ifndef LIGHT_H
 #define LIGHT_H

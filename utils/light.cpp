@@ -32,7 +32,6 @@ void  Light::disable(){
 	glDisable(this->light);
 }
 void Light::update(){
-
 	if(target!=NULL){
 		this->lookAt = target->pos;
 	}
