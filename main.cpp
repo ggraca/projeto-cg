@@ -58,7 +58,7 @@ void initWorld(){
 	go_list.push_back((GameObject*) new Light(new Vector3( -1.5f,12.0f,-4.0f),new Vector3(0,0,0), 5.0f, 100.0f, false, (GLenum) GL_LIGHT0,(GameObject*)go_list[2],ambient,diffuse,specular));
 	((Light*)(go_list[go_list.size()-1]))->enable();
 	//Ambient light
-	GLfloat color[]={0.6f,0.6f,0.6f,1.0f};
+	GLfloat color[]={0.5f,0.5f,0.5f,1.0f};
 	go_list.push_back((GameObject*) new Light(new Vector3( 0,1000,0),new Vector3(0,1001,0), 0.0f, 0.0f, true, (GLenum) GL_LIGHT1,NULL,color,color,color));
 	((Light*)(go_list[go_list.size()-1]))->enable();
 }
