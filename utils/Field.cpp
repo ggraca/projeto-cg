@@ -26,15 +26,23 @@ void Field::draw(){
 
   //glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D,texture[0]);
+  float ti=0;
   for(float i= wmin; i<wmax;i+=malha){ //Ineficiente desenha 2 vezes o mesmo vertice mas yolo
-	 for(float j= lmin; j<lmax;j+=malha){
-	  glBegin(GL_QUADS);
-  		glNormal3f(0,1,0);  glTexCoord2f(0, 0);  glVertex3f(i, 0, j);
-  		glNormal3f(0,1,0);	glTexCoord2f(1, 0);  glVertex3f(i+malha, 0, j);
-  		glNormal3f(0,1,0);	glTexCoord2f(1, 1);  glVertex3f(i+malha, 0, j+malha);
-  		glNormal3f(0,1,0);	glTexCoord2f(0, 1);  glVertex3f(i, 0, j+malha);
-	  glEnd();
-	 }
+    float tj = 0;
+    for(float j= lmin; j<lmax;j+=malha){
+
+      glBegin(GL_QUADS);
+      	glNormal3f(0,1,0);  glTexCoord2f(ti, tj);  glVertex3f(i, 0, j);
+      	glNormal3f(0,1,0);	glTexCoord2f(ti + malha, tj);  glVertex3f(i+malha, 0, j);
+      	glNormal3f(0,1,0);	glTexCoord2f(ti + malha, tj + malha);  glVertex3f(i+malha, 0, j+malha);
+      	glNormal3f(0,1,0);	glTexCoord2f(ti, tj + malha);  glVertex3f(i, 0, j+malha);
+      glEnd();
+
+      tj+=malha;
+      if(tj > 1 - malha) tj -= 1 - malha;
+    }
+    ti+=malha;
+    if(ti > 1 - malha) ti -= 1 - malha;
   }
   //glDisable(GL_TEXTURE_2D);
 
