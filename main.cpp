@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 GLint wSizeW = 800, wSizeH = 600;
 
 int maxFps = 60;
@@ -34,15 +33,14 @@ void init(){
 void initWorld(){
 	//Field
 	go_list.push_back((GameObject*)new Field(new Vector3(0, 0, 0)));
+	go_list.push_back((GameObject*)new Spectator(new Vector3(0, 0, 0)));
+
 
 	//Stones
 	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, 0)));
 	go_list.push_back((GameObject*)new Stone(new Vector3(4, 0, 35)));
 	go_list.push_back((GameObject*)new Stone(new Vector3(3, 0, 25)));
 	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, -10)));
-
-	Stone* test = new Stone(new Vector3(3, 0, 4));
-	go_list.push_back((GameObject*)test);
 
 	//Camera
 	Vector3 *obsPos = new Vector3(30,30,0);
@@ -57,10 +55,9 @@ void initWorld(){
 	GLfloat ambient[]={ 0.0f, 0.0f, 0.0f, 1.0f };
 	GLfloat diffuse[]= { 0.8f, 0.8f, 0.2, 1.0f };
 	GLfloat specular[]= { 0.3f, 0.3f, 0.3f, 1.0f };
-	go_list.push_back((GameObject*) new Light(new Vector3( -1.5f,12.0f,-4.0f),new Vector3(0,0,0), 5.0f, 100.0f, (GLenum) GL_LIGHT0,(GameObject*)go_list[1],ambient,diffuse,specular));
+	go_list.push_back((GameObject*) new Light(new Vector3( -1.5f,12.0f,-4.0f),new Vector3(0,0,0), 5.0f, 100.0f, (GLenum) GL_LIGHT0,(GameObject*)go_list[2],ambient,diffuse,specular));
 	((Light*)(go_list[go_list.size()-1]))->enable();
 }
-
 
 
 

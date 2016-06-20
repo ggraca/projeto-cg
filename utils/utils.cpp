@@ -84,6 +84,21 @@ Vector3* Vector3::normalizeVector(Vector3* v){
 	return result;
 }
 
+vector<Vector3*> gen_circle(float r, int segments){
+  vector<Vector3*> coords;
+  for(int i = 0; i < segments; i++){
+    float theta = 2.0f * 3.1415926f * float(i) / float(segments);
+
+    coords.push_back(new Vector3(
+      r * cosf(theta),
+      r * sinf(theta),
+      0)
+    );
+  }
+
+  return coords;
+}
+
 void drawText(char *string, Vector3 * v)
 {
 	glColor4f(1,1,1,1); //NOTA: Definir previamente o VERMELHO
