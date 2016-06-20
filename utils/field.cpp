@@ -1,12 +1,11 @@
 #include "objects.h"
 
 GLfloat reflectionAlpha =1.0f;
-
+  
 void Field::draw(){
-
+  w = 5;
+  l = 45;
   //Base (45 * 5)
-  GLint w = 5;
-  GLint l = 45;
   GLfloat wmin =-w;
   GLfloat wmax = w;
   GLfloat lmin =-l;

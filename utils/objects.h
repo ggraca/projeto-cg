@@ -34,6 +34,7 @@ class Field : GameObject{
     void drawBorder(int width);
     void drawStair(int width, int n);
 	void drawWithReflections(vector<GameObject*> go_old);
+	GLfloat w, l;
 };
 
 class Glass : public GameObject{
