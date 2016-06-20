@@ -13,6 +13,8 @@ void init(){
 	srand (time(NULL));
 
 	//TODO create loadtextures()
+	RgbImage imag;
+
 	glGenTextures(1, &texture[0]);
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -21,8 +23,22 @@ void init(){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	RgbImage imag;
 	imag.LoadBmpFile("data/ice1.bmp");
+	glTexImage2D(GL_TEXTURE_2D, 0, 3,
+		imag.GetNumCols(),
+		imag.GetNumRows(), 0, GL_RGB, GL_UNSIGNED_BYTE,
+		imag.ImageData()
+	);
+
+	glGenTextures(1, &texture[1]);
+	glBindTexture(GL_TEXTURE_2D, texture[1]);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	imag.LoadBmpFile("data/pub.bmp");
 	glTexImage2D(GL_TEXTURE_2D, 0, 3,
 		imag.GetNumCols(),
 		imag.GetNumRows(), 0, GL_RGB, GL_UNSIGNED_BYTE,
@@ -38,11 +54,11 @@ void initWorld(){
 	Spectator* s;
 	for(int i = -44; i <= 44; i += 3){
 
-		s = new Spectator(new Vector3(7, 0, i));
+		s = new Spectator(new Vector3(7.5, 3, i));
 		s->rot->y = 90;
 		go_list.push_back((GameObject*)s);
 
-		s = new Spectator(new Vector3(-7, 0, i));
+		s = new Spectator(new Vector3(-7.5, 3, i));
 		s->rot->y = 90;
 		go_list.push_back((GameObject*)s);
 	}
@@ -53,6 +69,8 @@ void initWorld(){
 	go_list.push_back((GameObject*)new Stone(new Vector3(4, 0, 35)));
 	go_list.push_back((GameObject*)new Stone(new Vector3(3, 0, 25)));
 	go_list.push_back((GameObject*)new Stone(new Vector3(1, 0, -10)));
+	Stone* test = new Stone(new Vector3(1, 0, -10));
+	go_list.push_back((GameObject*)test);
 
 	//Camera
 	Vector3 *obsPos = new Vector3(30,30,0);
@@ -67,7 +85,8 @@ void initWorld(){
 	GLfloat ambient[]={ 0.0f, 0.0f, 0.0f, 1.0f };
 	GLfloat diffuse[]= { 0.8f, 0.8f, 0.2, 1.0f };
 	GLfloat specular[]= { 0.3f, 0.3f, 0.3f, 1.0f };
-	go_list.push_back((GameObject*) new Light(new Vector3( -1.5f,12.0f,-4.0f),new Vector3(0,0,0), 5.0f, 100.0f, (GLenum) GL_LIGHT0,(GameObject*)go_list[2],ambient,diffuse,specular));
+
+	go_list.push_back((GameObject*) new Light(new Vector3( -1.5f,12.0f,-4.0f),new Vector3(0,0,0), 5.0f, 100.0f, (GLenum) GL_LIGHT0,(GameObject*)test,ambient,diffuse,specular));
 	((Light*)(go_list[go_list.size()-1]))->enable();
 }
 
@@ -140,7 +159,7 @@ int main(int argc, char** argv){
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_DEPTH_TEST);
     //glEnable(GL_CULL_FACE);
-    //glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHTING);
     glShadeModel(GL_SMOOTH);
 
 

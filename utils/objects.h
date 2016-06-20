@@ -28,8 +28,9 @@ class Field : GameObject{
   public:
     Field(Vector3* pos) : GameObject(pos){};
     void draw();
-    void drawBorder(int width);
     void drawTarget();
+    void drawBorder(int width);
+    void drawStairs(int width, int n);
 };
 
 class Spectator : public GameObject{
