@@ -214,6 +214,11 @@ void Field::draw(){
   //Base (45 * 5)
   GLint w = 5;
   GLint l = 45;
+  GLfloat wmin =-w;
+  GLfloat wmax = w;
+  GLfloat lmin =-l;
+  GLfloat lmax = l;
+  GLfloat malha = 0.2; //always par please
   
   float  specReflection[4] = {0.296648, 0.296648,0.296648, 1.0f }; //Pearl values
   float difReflection[4] = {1.0,0.829,0.22525,0.829};
@@ -227,15 +232,27 @@ void Field::draw(){
   
   glColor3f(1.0, 1.0, 1.0);
   
-  glEnable(GL_TEXTURE_2D);
-  glBindTexture(GL_TEXTURE_2D,texture[0]);
-  glBegin(GL_QUADS);
-    glTexCoord2f(0, 0); glVertex3f(-w, 0, -l);
-    glTexCoord2f(w, 0); glVertex3f(w, 0, -l);
-    glTexCoord2f(w, l); glVertex3f(w, 0, l);
-    glTexCoord2f(0, l); glVertex3f(-w, 0, l);
-  glEnd();
-  glDisable(GL_TEXTURE_2D);
+  //glEnable(GL_TEXTURE_2D);
+  //glBindTexture(GL_TEXTURE_2D,texture[0]);
+  /*glTexCoord2f(0, 0); glVertex3f(i, 0, j);
+	glTexCoord2f(1, 0); glVertex3f(i+malha, 0, j);
+	glTexCoord2f(1, 1); glVertex3f(i+malha, 0, j+malha);
+	glTexCoord2f(0, 1); glVertex3f(i, 0, j+malha);*/
+  for(float i= wmin; i<wmax;i+=malha){ //Ineficiente desenha 2 vezes o mesmo vertice mas yolo
+	 for(float j= lmin; j<lmax;j+=malha){
+	  glBegin(GL_QUADS);
+		glNormal3f(0,1,0);
+		glTexCoord2f(0, 0); glVertex3f(i, 0, j);
+		glNormal3f(0,1,0);
+		glTexCoord2f(1, 0); glVertex3f(i+malha, 0, j);
+		glNormal3f(0,1,0);
+		glTexCoord2f(1, 1); glVertex3f(i+malha, 0, j+malha);
+		glNormal3f(0,1,0);
+		glTexCoord2f(0, 1); glVertex3f(i, 0, j+malha);
+	  glEnd();
+	 }
+  }
+  //glDisable(GL_TEXTURE_2D);
 
   
   specReflection[0] = 0.50196078; //Cyan plastic values

@@ -60,7 +60,7 @@ void ambientLightDef(){
 	GLfloat ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 	GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8, 1.0f };
 	GLfloat specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-	GLfloat position[] = { -1.5f, 10.0f, -4.0f, 1.0 };
+	GLfloat position[] = { -1.5f, 12.0f, -4.0f, 1.0 };
 
 	// Assign created components to GL_LIGHT0
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
@@ -71,21 +71,21 @@ void ambientLightDef(){
 }
 
 void pointLightDef(){
-  GLfloat ambientLight[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    GLfloat ambientLight[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.2, 1.0f };
 	GLfloat specularLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };
-
-
+	
+	 
 	// Assign created components to GL_LIGHT0
 	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, specularLight);
-	GLfloat pos[]= {cam->pos->x, cam->pos->y, cam->pos->z};
-	glLightfv(GL_LIGHT0, GL_POSITION, pos);
-	GLfloat dir[] = {cam->dir->x,cam->dir->y,cam->dir->z};
+    GLfloat pos[]= { -1.5f, 12.0f, -4.0f, 1.0 };//{cam->pos->x, cam->pos->y, cam->pos->z};
+	glLightfv(GL_LIGHT1, GL_POSITION, pos);
+	GLfloat dir[] = {cam->pos->x-pos[0], cam->pos->y-pos[1], cam->pos->z-pos[2]};//{cam->dir->x,cam->dir->y,cam->dir->z};
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, dir);
-	glLightf (GL_LIGHT1, GL_SPOT_EXPONENT , 0.8);
-	glLightf (GL_LIGHT1, GL_SPOT_CUTOFF, 50.0);
+	glLightf (GL_LIGHT1, GL_SPOT_EXPONENT , 0.3);
+	glLightf (GL_LIGHT1, GL_SPOT_CUTOFF, 20);
 }
 
 void drawScene(){
@@ -160,8 +160,8 @@ int main(int argc, char** argv){
     glEnable(GL_LIGHTING);
     glShadeModel(GL_SMOOTH);
 
-	glEnable(GL_LIGHT0);
-	//glEnable(GL_LIGHT1);
+	//glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
 
 	//glFrontFace(GL_CW);
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
