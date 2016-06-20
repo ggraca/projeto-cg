@@ -8,6 +8,7 @@ float elapsedTime = 0, previousTime = 0;
 Camera *cam;
 GLuint  texture[2];
 vector<GameObject*> go_list;
+Field *field;
 
 void init(){
 	srand (time(NULL));
@@ -48,7 +49,7 @@ void init(){
 
 void initWorld(){
 	//Field
-	go_list.push_back((GameObject*)new Field(new Vector3(0, 0, 0)));
+	field = new Field(new Vector3(0, 0, 0));
 
 	//Spectators
 	Spectator* s;
@@ -106,13 +107,16 @@ void drawScene(){
 		go_list[i]->update_();
 	for(int i = 0; i < (int)go_list.size(); i++)
 		go_list[i]->draw_();
+	
+	field->drawWithReflections(go_list);
+	
 	for(int i = 0; i < (int)go_list.size(); i++)
 		go_list[i]->lateDraw_();
 
 }
 
 void display(){
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT |  GL_STENCIL_BUFFER_BIT);
 	glPushMatrix();
 		glViewport (0,0,wSizeW, wSizeH);
 
@@ -127,12 +131,6 @@ void display(){
 
 		cam->update();
 		cam->drawCamera();
-
-		//Lights
-		//pointLightDef();
-		//ambientLightDef();
-
-
 
 		drawScene();
 
@@ -157,7 +155,7 @@ void update(int v){
 
 int main(int argc, char** argv){
 	glutInit(&argc, argv);
-	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GL_STENCIL_BUFFER_BIT);
 	glutInitWindowSize (wSizeW, wSizeH);
 	glutInitWindowPosition (0, 0);
 	glutCreateWindow ("OpenGL - Projeto");
@@ -175,9 +173,10 @@ int main(int argc, char** argv){
 	glEnable(GL_COLOR_MATERIAL);
 
 	//Luz-Fim
-
+	
+	//Reflection
+	glEnable(GL_STENCIL_TEST);
 	//Transparency
-	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//glEnable(GL_CULL_FACE);

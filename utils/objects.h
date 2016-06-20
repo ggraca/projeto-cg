@@ -31,6 +31,7 @@ class Field : GameObject{
     void drawTarget();
     void drawBorder(int width);
     void drawStairs(int width, int n);
+	void drawWithReflections(vector<GameObject*> go_old);
 };
 
 class Glass : public GameObject{

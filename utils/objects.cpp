@@ -196,7 +196,7 @@ Glass::Glass(Vector3* pos, Vector3* rot) : GameObject(pos){
 void Glass::lateDraw(){
   int i, segments = 20;
   vector<Vector3*> coords;
-
+  glEnable(GL_BLEND);
   glColor4f(0.4, 0.8, 0.95, 0.5);
 
   //Body
@@ -235,4 +235,5 @@ void Glass::lateDraw(){
 
     glEnd();
   glPopMatrix();
+  glDisable(GL_BLEND);
 }
